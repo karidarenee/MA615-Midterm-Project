@@ -8,8 +8,8 @@
 pacman::p_load(tidyverse, magrittr, stringr, dplyr)
 
 # Import Data
-pesticides <- read.csv("Pesticides.csv", header = TRUE)
-strawb <- read.csv("Strawberries.csv", header = TRUE)
+pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "latin1")
+strawb <- read.csv("Strawberries.csv", header = TRUE, fileEncoding = "latin1")
 
 #--From Haviland's code--------------------------------------------------------#
 # Separate Domain into dname and type
