@@ -4,6 +4,10 @@
 # chemical, chemical type (insecticide, herbicide, fungicide, fertilizer), 
 # toxicity-human/bee, toxicity-level, state, year, and measurement(s) 
 
+#Load packages
+pacman::p_load(tidyverse, magrittr, stringr)
+
+# Import Data
 pesticides <- read.csv("Pesticides.csv", header = TRUE)
 strawb <- read.csv("Strawberries.csv", header = TRUE)
 
@@ -30,4 +34,27 @@ strawb %<>% mutate(details = str_extract(str_trim(details) ,"[^(].*[^)]") )
 
 strawb %<>% mutate(type = str_trim(type)) #recreate column
 
+
+#select only chemical columns
+strawb_chem <- strawb %>% filter((type=="FUNGICIDE")|
+                                   (type=="HERBICIDE")|
+                                   (type=="INSECTICIDE")|
+                                   (type== "FERTILIZER")|
+                                   (type== "OTHER"))
+
+
+#drop no info columns
+drop_no_info_cols <- function(df){
+  cnames = colnames(strawb)
+  T = NULL
+  for(i in 1:ncol(df)){T <- c(T, nrow(unique(df[i])))}
+  drop_cols <- cnames[which(T == 1)]
+  return(select(df, !all_of(drop_cols)))
+}
+
+strawb_chem <- drop_no_info_cols(strawb_chem)
 #------------------------------------------------------------------------------#
+#separate the name from the =Number
+strawb_chem$chem_split <- str_split(strawb_chem$details, " =", simplify = TRUE)
+         
+
