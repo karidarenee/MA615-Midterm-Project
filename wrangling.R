@@ -5,7 +5,7 @@
 # toxicity-human/bee, toxicity-level, state, year, and measurement(s) 
 
 #Load packages
-pacman::p_load(tidyverse, magrittr, stringr)
+pacman::p_load(tidyverse, magrittr, stringr, dplyr)
 
 # Import Data
 pesticides <- read.csv("Pesticides.csv", header = TRUE)
@@ -54,7 +54,20 @@ drop_no_info_cols <- function(df){
 
 strawb_chem <- drop_no_info_cols(strawb_chem)
 #------------------------------------------------------------------------------#
-#separate the name from the =Number
-strawb_chem$chem_split <- str_split(strawb_chem$details, " =", simplify = TRUE)
-         
 
+#separate the name from the =Number
+chemname <- str_split(strawb_chem$details, " =", simplify = TRUE)
+strawb_chem$name <- chemname[,1]
+
+#format chemical names in the pesticide file to be all caps to match the 
+#strawb_chem file chem_split columns
+pesticides <- rename(pesticides, name = ï..Pesticide)
+pesticides <- mutate_all(pesticides, .funs=toupper)
+
+#remove empty rows
+pesticides <- pesticides[!apply(pesticides == "", 1, all), ] 
+
+#delete white space in names
+#pesticides$name <- str_trim(pesticides$name) 
+
+join <- inner_join(strawb_chem, pesticides)
