@@ -20,4 +20,4 @@ pacman::p_load("tidyverse","ggplot2","dplyr","png")
 Possible Questions:
 1.Does the use of potentially human toxic chemicals vary between states?
 2.Does the use of potentially bee toxic chemicals vary between states?
-3.How price changes by years and states?
+3.How Pesticide dosage changes by years and states?
