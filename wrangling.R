@@ -86,9 +86,6 @@ distinct(strawberry, Strawberries)
 distinct(strawberry, items)
 distinct(strawberry, discription)
 distinct(strawberry, units)
-
-# use numerical values to represent the bee toxin level
-a <- sub("SLIGHT","1",strawberry$Bee.Toxins)
-b <- sub("MODERATE","2",a)
-c <- sub("HIGH","3",b)
-strawberry$Bee.Toxins <- c
+strawberry
+strawberry_new<-na.omit(strawberry)
+strawberry_new
