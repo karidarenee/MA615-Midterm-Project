@@ -5,7 +5,7 @@
 # toxicity-human/bee, toxicity-level, state, year, and measurement(s) 
 
 #Load packages
-pacman::p_load(tidyverse, magrittr, stringr, dplyr)
+pacman::p_load(tidyverse, magrittr, stringr, dplyr,janitor)
 
 # Import Data
 pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "latin1")
@@ -63,7 +63,8 @@ strawb_chem$chemical <- chemname[,1]
 
 #format chemical names in the pesticide file to be all caps to match the 
 #strawb_chem file chem_split columns
-pesticides <- rename(pesticides, chemical = ï..Pesticide)
+pesticides<- clean_names(pesticides)
+pesticides<- rename(pesticides, chemical = i_pesticide)
 pesticides <- mutate_all(pesticides, .funs=toupper)
 
 #remove empty rows
@@ -97,18 +98,18 @@ strawberry %<>%drop_na(Value)
 #b <- sub("MODERATE","2",a)
 #c <- sub("HIGH","3",b)
 # strawberry$Bee.Toxins <- c
-strawberry$Bee.Toxins <- plyr::mapvalues(strawberry$Bee.Toxins, 
+strawberry$Bee.Toxins <- plyr::mapvalues(strawberry$bee_toxins, 
                                            from = c("SLIGHT","MODERATE","HIGH"), to = c(1,2,3))
 strawberry$Bee.Toxins <- as.numeric(strawberry$Bee.Toxins)
 
 # use numerical values to represent the Carcinogen level
 # 1 = POSSIBLE, 2 = PROBABLE, 3 = KNOWN
-strawberry$Carcinogen <- plyr::mapvalues(strawberry$Carcinogen, 
+strawberry$Carcinogen <- plyr::mapvalues(strawberry$carcinogen, 
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
 strawberry$Carcinogen <- as.numeric(strawberry$Carcinogen)
 # >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
 
 # change names of variable "type","Carcinogen","Bee.Toxins
 colnames(strawberry)[colnames(strawberry) %in% 
-                       c("type","Carcinogen","Bee.Toxins")] <- 
+                       c("type","carcinogen","bee_toxins")] <- 
   c("chemical type","toxicity-level","toxicity-bee")
