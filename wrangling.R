@@ -107,3 +107,8 @@ strawberry$Carcinogen <- plyr::mapvalues(strawberry$Carcinogen,
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
 strawberry$Carcinogen <- as.numeric(strawberry$Carcinogen)
 # >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
+
+# change names of variable "type","Carcinogen","Bee.Toxins
+colnames(strawberry)[colnames(strawberry) %in% 
+                       c("type","Carcinogen","Bee.Toxins")] <- 
+  c("chemical type","toxicity-level","toxicity-bee")
