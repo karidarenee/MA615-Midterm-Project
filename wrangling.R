@@ -22,6 +22,8 @@ strawb %<>%
   mutate(Chemicals = Domain.Category) %>% 
   relocate(Chemicals, .after = Domain.Category) 
 
+# set Value column to numeric
+strawb$Value <- as.numeric(strawb$Value)
 
 # create list of chemicals
 strawb %<>% separate(col = Chemicals,
