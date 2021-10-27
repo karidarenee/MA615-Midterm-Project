@@ -8,7 +8,7 @@
 pacman::p_load(tidyverse, magrittr, stringr, dplyr)
 
 # Import Data
-pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "UTF-8-BOM")
+pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "latin1")
 strawb <- read.csv("Strawberries.csv", header = TRUE, fileEncoding = "latin1")
 
 #--From Haviland's code--------------------------------------------------------#
@@ -63,7 +63,7 @@ strawb_chem$chemical <- chemname[,1]
 
 #format chemical names in the pesticide file to be all caps to match the 
 #strawb_chem file chem_split columns
-pesticides <- rename(pesticides, chemical = Pesticide)
+pesticides <- rename(pesticides, chemical = ï..Pesticide)
 pesticides <- mutate_all(pesticides, .funs=toupper)
 
 #remove empty rows
@@ -88,7 +88,7 @@ distinct(strawberry, discription)
 distinct(strawberry, units)
 # <<<<<<< HEAD
 strawberry
-strawberry %>%drop_na(Value)
+strawberry %<>%drop_na(Value)
 # =======
 
 # use numerical values to represent the bee toxin level
