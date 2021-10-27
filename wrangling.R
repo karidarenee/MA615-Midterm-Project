@@ -94,8 +94,12 @@ strawberry %<>%drop_na(Value)
 
 # change names of variable "type","Carcinogen","Bee.Toxins
 colnames(strawberry)[colnames(strawberry) %in% 
-                       c("type","carcinogen","bee_toxins")] <- 
-  c("chemical_type","toxicity_level","toxicity_bee")
+                       c("type")] <- c("chemical_type")
+colnames(strawberry)[colnames(strawberry) %in% 
+                       c("discription")] <- c("Measurement(s)")
+colnames(strawberry)[colnames(strawberry) %in% 
+                       c("bee_toxins")] <- c("toxicity_bee")
+
 
 # use numerical values to represent the bee toxin level
 # 1 = SLIGHT, 2 = MODERATE, 3 = HIGH
@@ -109,7 +113,7 @@ strawberry$toxicity_bee <- as.numeric(strawberry$toxicity_bee)
 
 # use numerical values to represent the Carcinogen level
 # 1 = POSSIBLE, 2 = PROBABLE, 3 = KNOWN
-strawberry$toxicity_level <- plyr::mapvalues(strawberry$toxicity_level, 
+strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen, 
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
-strawberry$toxicity_level <- as.numeric(strawberry$toxicity_level)
+strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 # >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
