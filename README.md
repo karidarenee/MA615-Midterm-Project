@@ -10,6 +10,6 @@ following columns:
 - year 
 - measurement(s)
 
-2. pdf document 
-3. slides
-4. shiny application
+2. Using R, produce a pdf document presenting results
+3. Using R. produce a presentation using Revealjs
+4. Make an R shiny application
