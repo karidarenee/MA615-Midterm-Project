@@ -70,17 +70,17 @@ pesticides <- pesticides[!apply(pesticides == "", 1, all), ]
 #delete white space in names
 #pesticides$name <- str_trim(pesticides$name) 
 
-join <- inner_join(strawb_chem, pesticides)
-join <- select(join, -c("Domain.Category", "title", "details"))
+strawberry <- inner_join(strawb_chem, pesticides)
+strawberry <- select(strawberry, -c("Domain.Category", "title", "details"))
 
 # 10.27
 # break Data.item into new columns
-join %<>% separate(col = Data.Item, 
+strawberry %<>% separate(col = Data.Item, 
                    into = c("Strawberries", "items", "discription", "units"),
                    sep = ",",
                    fill = "right")
 # explore the new columns
-distinct(join, Strawberries)
-distinct(join, items)
-distinct(join, discription)
-distinct(join, units)
+distinct(strawberry, Strawberries)
+distinct(strawberry, items)
+distinct(strawberry, discription)
+distinct(strawberry, units)
