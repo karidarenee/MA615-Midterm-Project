@@ -8,7 +8,7 @@ output: pdf_document
 document should be structured with appropriate headings, tables, plots, images, 
 and maps. Make sure to include citations. 
 
-
-```{r}
-
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load("tidyverse","ggplot2","dplyr")
 ```
