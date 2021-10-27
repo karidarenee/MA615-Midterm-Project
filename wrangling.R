@@ -87,5 +87,4 @@ distinct(strawberry, items)
 distinct(strawberry, discription)
 distinct(strawberry, units)
 strawberry
-strawberry_new<-na.omit(strawberry)
-strawberry_new
+strawberry %>%drop_na(Value)
