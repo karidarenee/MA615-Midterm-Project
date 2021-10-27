@@ -86,10 +86,10 @@ distinct(strawberry, Strawberries)
 distinct(strawberry, items)
 distinct(strawberry, discription)
 distinct(strawberry, units)
-<<<<<<< HEAD
+# <<<<<<< HEAD
 strawberry
 strawberry %>%drop_na(Value)
-=======
+# =======
 
 # use numerical values to represent the bee toxin level
 # 1 = SLIGHT, 2 = MODERATE, 3 = HIGH
@@ -106,4 +106,4 @@ strawberry$Bee.Toxins <- as.numeric(strawberry$Bee.Toxins)
 strawberry$Carcinogen <- plyr::mapvalues(strawberry$Carcinogen, 
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
 strawberry$Carcinogen <- as.numeric(strawberry$Carcinogen)
->>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
+# >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
