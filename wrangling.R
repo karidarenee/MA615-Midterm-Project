@@ -88,9 +88,15 @@ distinct(strawberry, discription)
 distinct(strawberry, units)
 
 # use numerical values to represent the bee toxin level
+# 1 = SLIGHT, 2 = MODERATE, 3 = HIGH
 #a <- sub("SLIGHT","1",strawberry$Bee.Toxins)
 #b <- sub("MODERATE","2",a)
 #c <- sub("HIGH","3",b)
 # strawberry$Bee.Toxins <- c
 strawberry$Bee.Toxins <- plyr::mapvalues(strawberry$Bee.Toxins, 
                                          from = c("SLIGHT","MODERATE","HIGH"), to = c(1,2,3))
+
+# use numerical values to represent the Carcinogen level
+# 1 = POSSIBLE, 2 = PROBABLE, 3 = KNOWN
+strawberry$Carcinogen <- plyr::mapvalues(strawberry$Carcinogen, 
+                                         from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
