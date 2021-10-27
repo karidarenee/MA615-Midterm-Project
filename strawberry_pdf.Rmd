@@ -1,0 +1,14 @@
+---
+title: "Strawberry PDF Document"
+author: "Group 3"
+date: "10/27/2021"
+output: pdf_document
+---
+*from assignment: * Using R, produce a pdf document presenting your results. The
+document should be structured with appropriate headings, tables, plots, images, 
+and maps. Make sure to include citations. 
+
+
+```{r}
+
+```
