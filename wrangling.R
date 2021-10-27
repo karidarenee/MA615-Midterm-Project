@@ -57,11 +57,11 @@ strawb_chem <- drop_no_info_cols(strawb_chem)
 
 #separate the name from the =Number
 chemname <- str_split(strawb_chem$details, " =", simplify = TRUE)
-strawb_chem$name <- chemname[,1]
+strawb_chem$chemical <- chemname[,1]
 
 #format chemical names in the pesticide file to be all caps to match the 
 #strawb_chem file chem_split columns
-pesticides <- rename(pesticides, name = ï..Pesticide)
+pesticides <- rename(pesticides, chemical = ï..Pesticide)
 pesticides <- mutate_all(pesticides, .funs=toupper)
 
 #remove empty rows
