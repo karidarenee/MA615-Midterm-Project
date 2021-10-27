@@ -72,3 +72,15 @@ pesticides <- pesticides[!apply(pesticides == "", 1, all), ]
 
 join <- inner_join(strawb_chem, pesticides)
 join <- select(join, -c("Domain.Category", "title", "details"))
+
+# 10.27
+# break Data.item into new columns
+join %<>% separate(col = Data.Item, 
+                   into = c("Strawberries", "items", "discription", "units"),
+                   sep = ",",
+                   fill = "right")
+# explore the new columns
+distinct(join, Strawberries)
+distinct(join, items)
+distinct(join, discription)
+distinct(join, units)
