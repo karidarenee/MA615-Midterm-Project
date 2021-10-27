@@ -91,6 +91,6 @@ distinct(strawberry, units)
 #a <- sub("SLIGHT","1",strawberry$Bee.Toxins)
 #b <- sub("MODERATE","2",a)
 #c <- sub("HIGH","3",b)
-#strawberry$Bee.Toxins <- c
+# strawberry$Bee.Toxins <- c
 strawberry$Bee.Toxins <- plyr::mapvalues(strawberry$Bee.Toxins, 
                                          from = c("SLIGHT","MODERATE","HIGH"), to = c(1,2,3))
