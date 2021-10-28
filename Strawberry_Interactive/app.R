@@ -51,10 +51,13 @@ frow2 <- fluidRow(
     
 )
 
-
+#ADD CHRISTINA'S TABLES HERE
+frow3 <- fluidRow(
+  
+)
 
 # combine the two fluid rows to make the body
-body <- dashboardBody(frow1, frow2)
+body <- dashboardBody(frow1, frow2, frow3)
 
 
 #COMBINE INTO UI
@@ -96,28 +99,39 @@ server <- function(input, output) {
              ,color = "yellow")
      })
      
-      reactive({
-      x_val <- .data[[input$x]]
-      unit <- .data[[input$y]]
-      print(typeof(x_val))
-      select <- strawberry[strawberry["Measurement(s)"] == unit,]
-      select %<>% 
-        #Step 2
-        group_by_at(.vars = c(x_val)) %>% 
-        #Step 3
-        summarise(mean(Value))
+  
+     
+     #plotSettings <- reactiveValues()
+     output$outplot <-  renderPlot({
+       x_val <- input$x
+       unit <-  input$y
       
-      
-      output$outplot <- renderPlot({
-          ggplot(select) +
-              geom_bar(aes(x = x_val, y = select$Value), position = position_stack(reverse = TRUE)) +
-              coord_flip() + 
-              theme(legend.position = "top")
-      
+       straw_select <- strawberry[strawberry["Measurement(s)"] == as.character(unit),]
+       straw_select %<>% 
+         #Step 2
+         group_by_at(.vars = c(x_val)) %>% 
+         #Step 3
+         summarise(mean = mean(Value), sd = sd(Value))%>% 
+         as_tibble()
+       
+       #in straw select create ymin and xmin
+       #if ymin<0 set to zero
+       straw_select$ymin <- ifelse((straw_select$mean-straw_select$sd)<0,yes = 0, no =straw_select$mean-straw_select$sd)
+       
+       
+       ggplot(straw_select) +
+         geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#D55E00")+
+         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=ymin, ymax=mean+sd), width=0,
+                       )+ 
+         xlab(input$x) +
+         ylab(paste(input$y))+
+         labs(title = "Mean of Selected Variables with St.Dev Errors")+
+         scale_y_continuous(limits = c(0, NA))
+       
      })
-      
-      })
-      
+     
 }
+      
+
 shinyApp(ui, server)
 
