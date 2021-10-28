@@ -101,11 +101,10 @@ server <- function(input, output) {
      
   
      
-     #plotSettings <- reactiveValues()
      output$outplot <-  renderPlot({
        x_val <- input$x
        unit <-  input$y
-      
+       
        straw_select <- strawberry[strawberry["Measurement(s)"] == as.character(unit),]
        straw_select %<>% 
          #Step 2
@@ -114,15 +113,11 @@ server <- function(input, output) {
          summarise(mean = mean(Value), sd = sd(Value))%>% 
          as_tibble()
        
-       #in straw select create ymin and xmin
-       #if ymin<0 set to zero
-       straw_select$ymin <- ifelse((straw_select$mean-straw_select$sd)<0,yes = 0, no =straw_select$mean-straw_select$sd)
-       
        
        ggplot(straw_select) +
          geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#D55E00")+
-         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=ymin, ymax=mean+sd), width=0,
-                       )+ 
+         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=mean-sd, ymax=mean+sd), width=.2,
+                       position=position_dodge(.9))+ 
          xlab(input$x) +
          ylab(paste(input$y))+
          labs(title = "Mean of Selected Variables with St.Dev Errors")+
