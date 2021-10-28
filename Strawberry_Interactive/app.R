@@ -21,7 +21,8 @@ sidebar <- dashboardSidebar(sidebarMenu(
              selectInput('x', 'X', choices = c("State", "Year"),
                          selected = "State")),
     menuItem("Select Y value:",
-             selectInput('y', 'Y', choices = unique(strawberry["Measurement(s)"])))
+             selectInput('y', 'Y', choices = unique(strawberry["Measurement(s)"]),
+                         selected = " MEASURED IN LB / ACRE / YEAR"))
 ))
 #create body
 frow1 <- fluidRow(
@@ -96,11 +97,16 @@ server <- function(input, output) {
      })
      
       reactive({
-      unit <- .data[[input$y]]
       x_val <- .data[[input$x]]
+      unit <- .data[[input$y]]
       print(typeof(x_val))
       select <- strawberry[strawberry["Measurement(s)"] == unit,]
-      select %<>% group_by(x_val) %>% summarise_at(vars(Value),list(mean = mean))
+      select %<>% 
+        #Step 2
+        group_by_at(.vars = c(x_val)) %>% 
+        #Step 3
+        summarise(mean(Value))
+      
       
       output$outplot <- renderPlot({
           ggplot(select) +
