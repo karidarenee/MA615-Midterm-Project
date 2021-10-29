@@ -117,3 +117,18 @@ strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen,
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
 strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 # >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
+
+
+table(strawberry$Year)
+
+# remove missing values in carcinogen
+strawberry_car <- subset(strawberry, carcinogen != "")
+
+table(strawberry_car$Year)
+
+table(strawberry_car$chemical)
+table(strawberry_car$chemical_Type)
+# remove missing values in toxicity_bee
+strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
+
+table(strawberry_car_insec$chemical_Type)
