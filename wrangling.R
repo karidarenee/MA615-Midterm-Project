@@ -129,11 +129,11 @@ strawberry_car <- subset(strawberry, carcinogen != "")
 table(strawberry_car$Year)
 
 table(strawberry_car$chemical)
-table(strawberry_car$chemical_Type)
+table(strawberry_car$chemical_type)
 # remove missing values in toxicity_bee
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 
-table(strawberry_car_insec$chemical_Type)
+table(strawberry_car_insec$chemical_type)
 
 
 
