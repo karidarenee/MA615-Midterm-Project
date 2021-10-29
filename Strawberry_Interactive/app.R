@@ -113,10 +113,13 @@ server <- function(input, output) {
          summarise(mean = mean(Value), sd = sd(Value))%>% 
          as_tibble()
        
+       straw_select$min_err <- ifelse((straw_select$mean-straw_select$sd<0),0,straw_select$mean-straw_select$sd)
+       straw_select$max_err <- straw_select$mean+straw_select$sd
+       
        
        ggplot(straw_select) +
          geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#D55E00")+
-         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=mean-sd, ymax=mean+sd), width=.2,
+         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=min_err, ymax=max_err), width=0,
                        position=position_dodge(.9))+ 
          xlab(input$x) +
          ylab(paste(input$y))+
