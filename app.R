@@ -9,6 +9,8 @@ source("wrangling.R")
 
 library(shiny)
 library(shinydashboard)
+library(DT)
+
 
 #create header
 header <- dashboardHeader(title = "Strawberry Shiny App")
@@ -41,20 +43,24 @@ frow2 <- fluidRow(
         ,plotOutput("outplot")
     )
     
-    ,box(
-        title = "BOX2"
-        ,status = "primary"
-        ,solidHeader = TRUE 
-        ,collapsible = TRUE 
-        ,plotOutput("revenuebyRegion", height = "300px")
-    ) 
+    # ,box(
+    #   #PUT DATAFRAME BASED ON SELECTED MEASUREMENT
+    #     title = "BOX2"
+    #     ,status = "primary"
+    #     ,solidHeader = TRUE 
+    #     ,collapsible = TRUE 
+    #     ,plotOutput("revenuebyRegion", height = "300px")
+    #) 
     
 )
 
-#ADD CHRISTINA'S TABLES HERE
 frow3 <- fluidRow(
+<<<<<<< HEAD
+  dataTableOutput("mytable")
+=======
   tableOutput("static"),
   dataTableOutput("dynamic")
+>>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
 )
 
 # combine the two fluid rows to make the body
@@ -128,8 +134,14 @@ server <- function(input, output) {
        
      })
      
+<<<<<<< HEAD
+     output$mytable = DT::renderDataTable({
+            df.lb
+          })
+=======
      output$static<-renderTable(head(strawberry))
      output$dynamic<-renderDataTable(strawberry, options = list(pageLength=5))
+>>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
      
 }
       
