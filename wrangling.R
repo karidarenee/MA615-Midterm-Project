@@ -118,10 +118,9 @@ strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen,
 strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 # >>>>>>> fc5afcadacad5040681a31f076c52d2455463e2d
 
-
 table(strawberry$Year)
 
-# remove missing values in carcinogen
+# remove missing values in carcinogen.
 strawberry_car <- subset(strawberry, carcinogen != "")
 
 table(strawberry_car$Year)
