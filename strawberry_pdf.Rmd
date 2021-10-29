@@ -12,3 +12,9 @@ and maps. Make sure to include citations.
 knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load("tidyverse","ggplot2","dplyr")
 ```
+
+```{r}
+source("wrangling.R", echo=TRUE)
+```
+
+
