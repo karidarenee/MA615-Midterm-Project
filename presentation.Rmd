@@ -37,7 +37,7 @@ table(strawberry_car$Year)
 ```{r}
 table(strawberry_car$chemical)
 table(strawberry_car$chemical_Type)
-
+# remove missing values in toxicity_bee
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 
 table(strawberry_car_insec$chemical_Type)
