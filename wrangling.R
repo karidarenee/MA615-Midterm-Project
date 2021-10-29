@@ -4,6 +4,9 @@
 # chemical, chemical type (insecticide, herbicide, fungicide, fertilizer), 
 # toxicity-human/bee, toxicity-level, state, year, and measurement(s) 
 
+oldw <- getOption("warn")
+options(warn = -1)
+
 #Load packages
 pacman::p_load(tidyverse, magrittr, stringr, dplyr,janitor)
 
@@ -142,3 +145,7 @@ df.app = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / APPLICA
 df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
 df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
 df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
+
+
+
+options(warn = oldw)

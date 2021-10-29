@@ -5,7 +5,7 @@
 #https://stackoverflow.com/questions/49473915/r-how-do-i-use-selectinput-in-shiny-to-change-the-x-and-fill-variables-in-a-gg
 
 
-#source("wrangling.R")
+source("wrangling.R")
 
 library(shiny)
 library(shinydashboard)
@@ -73,28 +73,27 @@ ui <- dashboardPage(
 server <- function(input, output) { 
     #creating the valueBoxOutput content
     #average pesticides per acre per year
-    lb_yr_ac <- strawberry[strawberry["Measurement(s)"] == " MEASURED IN LB / ACRE / YEAR",]
+    lb_yr_ac <- strawberry[strawberry["Measurement(s)"] == "MEASURED IN LB / ACRE / YEAR",]
     #isolate neurotoxins
     nt <- !(lb_yr_ac$neurotoxins == '')
     cg <- !is.na(lb_yr_ac$carcinogen)
     
-    
-    output$value1 <- renderValueBox({
+        output$value1 <- renderValueBox({
         valueBox(
-            format(mean(lb_yr_ac$Value),digits = 2)
+            format(mean(lb_yr_ac$Value,na.rm=TRUE),digits = 2)
             ,paste('Overall pesticide application mean lb/acre/year')
             ,color = "green")})
     
      output$value2 <- renderValueBox({
         valueBox(
-            format(mean(lb_yr_ac$Value[nt]),digits = 2)
+            format(mean(lb_yr_ac$Value[nt], na.rm=TRUE),digits = 2)
             ,paste('Neurotoxin application mean lb/acre/year')
             ,color = "blue")
         })
      
      output$value3 <- renderValueBox({
          valueBox(
-             format(round(mean(lb_yr_ac$Value[cg]), digits = 2), nsmall = 1)
+             format(round(mean(lb_yr_ac$Value[cg],na.rm=TRUE), digits = 2), nsmall = 1)
              ,paste('Carcinogen application mean lb/acre/year')
              ,color = "yellow")
      })
@@ -110,7 +109,7 @@ server <- function(input, output) {
          #Step 2
          group_by_at(.vars = c(x_val)) %>% 
          #Step 3
-         summarise(mean = mean(Value), sd = sd(Value))%>% 
+         summarise(mean = mean(Value,na.rm=TRUE), sd = sd(Value))%>% 
          as_tibble()
        
        straw_select$min_err <- ifelse((straw_select$mean-straw_select$sd<0),0,straw_select$mean-straw_select$sd)
