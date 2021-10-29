@@ -55,7 +55,12 @@ frow2 <- fluidRow(
 )
 
 frow3 <- fluidRow(
+<<<<<<< HEAD
   dataTableOutput("mytable")
+=======
+  tableOutput("static"),
+  dataTableOutput("dynamic")
+>>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
 )
 
 # combine the two fluid rows to make the body
@@ -129,9 +134,14 @@ server <- function(input, output) {
        
      })
      
+<<<<<<< HEAD
      output$mytable = DT::renderDataTable({
             df.lb
           })
+=======
+     output$static<-renderTable(head(strawberry))
+     output$dynamic<-renderDataTable(strawberry, options = list(pageLength=5))
+>>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
      
 }
       
