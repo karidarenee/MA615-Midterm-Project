@@ -13,6 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load("tidyverse","ggplot2","dplyr")
 ```
 
+Possible Questions:
+1.Does the use of potentially human toxic chemicals vary between states?
+2.Does the use of potentially bee toxic chemicals vary between states?
+3.How Pesticide dosage changes by years and states?
+
 ```{r}
 source("wrangling.R", echo=TRUE)
 ```
