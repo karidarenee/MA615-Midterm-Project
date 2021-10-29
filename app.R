@@ -53,7 +53,8 @@ frow2 <- fluidRow(
 
 #ADD CHRISTINA'S TABLES HERE
 frow3 <- fluidRow(
-  
+  tableOutput("static"),
+  dataTableOutput("dynamic")
 )
 
 # combine the two fluid rows to make the body
@@ -126,6 +127,9 @@ server <- function(input, output) {
          scale_y_continuous(limits = c(0, NA))
        
      })
+     
+     output$static<-renderTable(head(strawberry))
+     output$dynamic<-renderDataTable(strawberry, options = list(pageLength=5))
      
 }
       
