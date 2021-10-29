@@ -1,49 +1,132 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+#This is what I've put together so far. Feel free to change any of it, and we 
+#can discuss more in person too. I've mostly mirrored the example in the link 
+#below.
+#https://github.com/amrrs/sample_revenue_dashboard_shiny/blob/master/app.R
+#https://stackoverflow.com/questions/49473915/r-how-do-i-use-selectinput-in-shiny-to-change-the-x-and-fill-variables-in-a-gg
+
+
+#source("wrangling.R")
 
 library(shiny)
+library(shinydashboard)
 
-# Define UI for application that draws a histogram
-ui <- fluidPage(
-
-    # Application title
-    titlePanel("Group 3 Strawberry Shiny App"),
-
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
-    )
+#create header
+header <- dashboardHeader(title = "Strawberry Shiny App")
+#create sidebar
+sidebar <- dashboardSidebar(sidebarMenu(
+    menuItem("Home", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Source", icon = icon("share",lib='glyphicon'), 
+             href = "https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3"),
+    menuItem("Select X value:", 
+             selectInput('x', 'X', choices = c("State", "Year"),
+                         selected = "State")),
+    menuItem("Select Y value:",
+             selectInput('y', 'Y', choices = unique(strawberry["Measurement(s)"]),
+                         selected = " MEASURED IN LB / ACRE / YEAR"))
+))
+#create body
+frow1 <- fluidRow(
+    valueBoxOutput("value1")
+    ,valueBoxOutput("value2")
+    ,valueBoxOutput("value3")
 )
 
-# Define server logic required to draw a histogram
-server <- function(input, output) {
+frow2 <- fluidRow(
+    
+    box(
+        title = "Barchart"
+        ,status = "primary"
+        ,solidHeader = TRUE 
+        ,collapsible = TRUE 
+        ,plotOutput("outplot")
+    )
+    
+    ,box(
+        title = "BOX2"
+        ,status = "primary"
+        ,solidHeader = TRUE 
+        ,collapsible = TRUE 
+        ,plotOutput("revenuebyRegion", height = "300px")
+    ) 
+    
+)
 
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+#ADD CHRISTINA'S TABLES HERE
+frow3 <- fluidRow(
+  
+)
 
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    })
+# combine the two fluid rows to make the body
+body <- dashboardBody(frow1, frow2, frow3)
+
+
+#COMBINE INTO UI
+ui <- dashboardPage(
+    header,
+    sidebar,
+    body,
+    skin = "green"
+    
+)
+
+
+server <- function(input, output) { 
+    #creating the valueBoxOutput content
+    #average pesticides per acre per year
+    lb_yr_ac <- strawberry[strawberry["Measurement(s)"] == " MEASURED IN LB / ACRE / YEAR",]
+    #isolate neurotoxins
+    nt <- !(lb_yr_ac$neurotoxins == '')
+    cg <- !is.na(lb_yr_ac$carcinogen)
+    
+    
+    output$value1 <- renderValueBox({
+        valueBox(
+            format(mean(lb_yr_ac$Value),digits = 2)
+            ,paste('Overall pesticide application mean lb/acre/year')
+            ,color = "green")})
+    
+     output$value2 <- renderValueBox({
+        valueBox(
+            format(mean(lb_yr_ac$Value[nt]),digits = 2)
+            ,paste('Neurotoxin application mean lb/acre/year')
+            ,color = "blue")
+        })
+     
+     output$value3 <- renderValueBox({
+         valueBox(
+             format(round(mean(lb_yr_ac$Value[cg]), digits = 2), nsmall = 1)
+             ,paste('Carcinogen application mean lb/acre/year')
+             ,color = "yellow")
+     })
+     
+  
+     
+     output$outplot <-  renderPlot({
+       x_val <- input$x
+       unit <-  input$y
+       
+       straw_select <- strawberry[strawberry["Measurement(s)"] == as.character(unit),]
+       straw_select %<>% 
+         #Step 2
+         group_by_at(.vars = c(x_val)) %>% 
+         #Step 3
+         summarise(mean = mean(Value), sd = sd(Value))%>% 
+         as_tibble()
+       
+       
+       ggplot(straw_select) +
+         geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#D55E00")+
+         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=mean-sd, ymax=mean+sd), width=.2,
+                       position=position_dodge(.9))+ 
+         xlab(input$x) +
+         ylab(paste(input$y))+
+         labs(title = "Mean of Selected Variables with St.Dev Errors")+
+         scale_y_continuous(limits = c(0, NA))
+       
+     })
+     
 }
+      
 
-# Run the application 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)
+
