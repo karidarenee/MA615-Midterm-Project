@@ -131,3 +131,14 @@ table(strawberry_car$chemical_Type)
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 
 table(strawberry_car_insec$chemical_Type)
+
+
+
+#Subsets by different measurement
+table(strawberry$`Measurement(s)`)
+strawberry$`Measurement(s)` = str_trim(strawberry$`Measurement(s)`)
+df.lb = subset(strawberry, `Measurement(s)` == "MEASURED IN LB")
+df.app = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / APPLICATION")
+df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
+df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
+df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
