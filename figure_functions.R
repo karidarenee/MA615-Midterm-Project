@@ -26,3 +26,30 @@ bar_plt <- function(x, y) {
     scale_y_continuous(limits = c(0, NA))
 }
 
+map.straw <- function(df){
+  library(plotly)
+  states = read_csv("csvData.csv") 
+  states$State = tolower(states$State) 
+  df$State = tolower(df$State) 
+  library(plyr)
+  df.lb2 = ddply(df,c("State", "Year"),numcolwise(sum)) #I sum the amount of pesticide by year for each state
+
+  df_map = left_join(df.lb2, states, by = "State") %>%
+    select(Year, State, Code, Value)%>%
+    mutate(hover = paste0(State, "\n", Value))
+  
+  
+  minwage_graph = plot_geo(df_map, 
+                           locationmode = "USA-states", 
+                           frame = ~Year) %>%
+    add_trace(locations = ~Code,
+              z = ~Value,#colored by z
+              color = ~Value,
+              colorscale = "Electric",
+              text = ~hover,
+              hoverinfo = "text")%>%
+    layout(geo = list(scope = 'usa'))
+  minwage_graph
+}
+
+
