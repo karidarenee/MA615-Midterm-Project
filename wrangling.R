@@ -146,6 +146,26 @@ df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
 df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
 df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
 
+#Calculate proportions of strawberries by 'Measurements=Number'
+library(dplyr)
+df.num<-tibble::as_tibble(df.num)
+#Count frequency/proportion for each state
+df.num %>%
+  group_by(State) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+#I think we can show the proportions of each states on our map using mouse over.
 
+#Calculate proportions of values(numbers) grouped by 'toxicity_bee'
+df.value<-tibble::as_tibble(df.num$Value)
+df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
+df.toxicity<-cbind(df.value,df.toxicity_bee)
+#Rename column 2 into 'toxicity_bee'
+names(df.toxicity)[2]<- 'toxicity_bee'
+
+df.toxicity %>%
+  group_by(toxicity_bee) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
 
 options(warn = oldw)
