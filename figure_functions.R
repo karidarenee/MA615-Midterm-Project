@@ -26,7 +26,7 @@ bar_plt <- function(x, y) {
     scale_y_continuous(limits = c(0, NA))
 }
 
-map.straw <- function(df){
+map.straw <- function(df, title.straw){
   library(plotly)
   states = read_csv("csvData.csv") 
   states$State = tolower(states$State) 
@@ -39,7 +39,7 @@ map.straw <- function(df){
     mutate(hover = paste0(State, "\n", Value))
   
   
-  minwage_graph = plot_geo(df_map, 
+  map_straw = plot_geo(df_map, 
                            locationmode = "USA-states", 
                            frame = ~Year) %>%
     add_trace(locations = ~Code,
@@ -48,8 +48,10 @@ map.straw <- function(df){
               colorscale = "Electric",
               text = ~hover,
               hoverinfo = "text")%>%
-    layout(geo = list(scope = 'usa'))
-  minwage_graph   
+    layout(geo = list(scope = 'usa'),
+           title = title.straw,
+           font = list(family = "DM Sans"))
+  map_straw    
 }
 
 
