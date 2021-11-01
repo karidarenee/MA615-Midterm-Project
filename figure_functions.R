@@ -1,5 +1,5 @@
-#BARCHART 
 pacman::p_load(ggplot2, magrittr, dplyr)
+
 bar_plt <- function(x, y) {
   x_val <- x
   unit <-  y
