@@ -146,6 +146,43 @@ df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
 df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
 df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
 
+#Calculate proportions of strawberries by 'Measurements=Number'
+library(dplyr)
+df.num<-tibble::as_tibble(df.num)
+#Count frequency/proportion for each state
+df.num %>%
+  group_by(State) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+#I think we can show the proportions of each states on our map using mouse over.
 
+#Calculate proportions of values(numbers) grouped by 'toxicity_bee'
+df.value<-tibble::as_tibble(df.num$Value)
+df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
+df.toxicity<-cbind(df.value,df.toxicity_bee)
+#Rename column 2 into 'toxicity_bee'
+names(df.toxicity)[2]<- 'toxicity_bee'
+
+df.toxicity %>%
+  group_by(toxicity_bee) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
 
 options(warn = oldw)
+
+#Distribution Plots
+#Here I choose "Measurements = number" as the things we care about.
+library(lattice)
+df.num$bee<-factor(df.num$toxicity_bee, levels=c(1,2,3,4), labels = c("Slight","Moderate","High","NA"))
+colors = c("red","blue","black","grey") 
+lines=c(1,2,3,4) 
+points=c(15,16,17,18)
+key.bee<-list(title="bee level", space="bottom",columns=4, text=list(levels(df.num$bee)),points=list(pch=points,col=colors),
+              lines=list(col=colors,lty=lines),cex.title=1,cex=.9)
+densityplot(~Value,data=df.num,group=bee,main="Number Distribution by Toxicity_bee Level", xlab="Values of number",pch=points,lty=lines,col=colors,
+             lwd=2, jitter=.005, key=key.bee)
+
+#Grouped Bar plot
+counts<-table(df.num$carcinogen,df.num$toxicity_bee)
+barplot(counts, main = "Strawberries Distribution by carcinogen and toxicity_bee", xlab = "Levels of Carcinogen", col = c("darkblue","red","grey","purple"),
+        legend = rownames(counts), beside=TRUE)

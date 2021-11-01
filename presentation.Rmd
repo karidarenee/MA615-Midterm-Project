@@ -22,3 +22,10 @@ Possible Questions:
 2.Does the use of potentially bee toxic chemicals vary between states?
 3.How Pesticide dosage changes by years and states?
 
+```{r}
+map.straw(df.lb)
+map.straw(df.app)
+map.straw(df.year)
+map.straw(df.num)
+map.straw(df.PCT)
+```
