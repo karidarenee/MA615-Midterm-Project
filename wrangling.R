@@ -184,5 +184,9 @@ densityplot(~Value,data=df.num,group=bee,main="Number Distribution by Toxicity_b
 
 #Grouped Barchart
 library(ggplot2)
-ggplot(df.num,aes(fill=toxicity_bee, y=Value, x=carcinogen)) + 
-  geom_bar(position="dodge",stat="identity")
+ggplot(df.num,aes(color=toxicity_bee, y=Value, x=carcinogen)) + 
+  geom_jitter(width = 0.1)
+# All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
+# There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
+
+
