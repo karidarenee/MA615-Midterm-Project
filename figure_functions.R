@@ -49,7 +49,7 @@ map.straw <- function(df){
               text = ~hover,
               hoverinfo = "text")%>%
     layout(geo = list(scope = 'usa'))
-  minwage_graph
+  minwage_graph   
 }
 
 
