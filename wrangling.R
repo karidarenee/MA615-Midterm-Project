@@ -182,7 +182,7 @@ key.bee<-list(title="bee level", space="bottom",columns=4, text=list(levels(df.n
 densityplot(~Value,data=df.num,group=bee,main="Number Distribution by Toxicity_bee Level", xlab="Values of number",pch=points,lty=lines,col=colors,
              lwd=2, jitter=.005, key=key.bee)
 
-#Grouped Bar plot
-counts<-table(df.num$carcinogen,df.num$toxicity_bee)
-barplot(counts, main = "Strawberries Distribution by carcinogen and toxicity_bee", xlab = "Levels of Carcinogen", col = c("darkblue","red","grey","purple"),
-        legend = rownames(counts), beside=TRUE)
+#Grouped Barchart
+library(ggplot2)
+ggplot(df.num,aes(fill=toxicity_bee, y=Value, x=carcinogen)) + 
+  geom_bar(position="dodge",stat="identity")
