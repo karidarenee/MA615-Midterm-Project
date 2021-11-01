@@ -23,9 +23,9 @@ Possible Questions:
 3.How Pesticide dosage changes by years and states?
 
 ```{r}
-map.straw(df.lb)
-map.straw(df.app)
-map.straw(df.year)
-map.straw(df.num)
-map.straw(df.PCT)
+map.straw(df.lb, "Pesticide Usage(in LB)\n2016 2018 2019")
+map.straw(df.app, "Pesticide Usage(LB/ACRE/APPLICATION)\n2016 2018 2019")
+map.straw(df.year, "Pesticide Usage(LB/ACRE/YEAR)\n2016 2018 2019")
+map.straw(df.num,"Pesticide Usage(NUMBER)\n2016 2018 2019")
+map.straw(df.PCT, "Pesticide Usage(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
