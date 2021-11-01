@@ -30,7 +30,6 @@ sidebar <- dashboardSidebar(sidebarMenu(
 frow1 <- fluidRow(
     valueBoxOutput("value1")
     ,valueBoxOutput("value2")
-    ,valueBoxOutput("value3")
 )
 
 frow2 <- fluidRow(
@@ -43,28 +42,19 @@ frow2 <- fluidRow(
         ,plotOutput("outplot")
     )
     
-    # ,box(
-    #   #PUT DATAFRAME BASED ON SELECTED MEASUREMENT
-    #     title = "BOX2"
-    #     ,status = "primary"
-    #     ,solidHeader = TRUE 
-    #     ,collapsible = TRUE 
-    #     ,plotOutput("revenuebyRegion", height = "300px")
-    #) 
+     ,box(
+         title = "Examine Raw Data"
+         ,status = "primary"
+         ,solidHeader = TRUE 
+         ,collapsible = TRUE 
+         ,tabPanel("Data", DT::dataTableOutput("mytable"))
+    ) 
     
 )
 
-frow3 <- fluidRow(
-<<<<<<< HEAD
-  dataTableOutput("mytable")
-=======
-  tableOutput("static"),
-  dataTableOutput("dynamic")
->>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
-)
 
 # combine the two fluid rows to make the body
-body <- dashboardBody(frow1, frow2, frow3)
+body <- dashboardBody(frow1, frow2)
 
 
 #COMBINE INTO UI
@@ -134,14 +124,12 @@ server <- function(input, output) {
        
      })
      
-<<<<<<< HEAD
-     output$mytable = DT::renderDataTable({
-            df.lb
-          })
-=======
-     output$static<-renderTable(head(strawberry))
-     output$dynamic<-renderDataTable(strawberry, options = list(pageLength=5))
->>>>>>> b867250ba368bf671d7f390a6fcedc28f6533dcb
+     
+     output$mytable <- renderDataTable({
+       DT::datatable(strawberry[strawberry['Measurement(s)'] == input$y, ])
+     })
+     
+     
      
 }
       
