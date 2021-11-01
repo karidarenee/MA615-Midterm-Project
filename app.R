@@ -126,7 +126,8 @@ server <- function(input, output) {
      
      
      output$mytable <- renderDataTable({
-       DT::datatable(strawberry[strawberry['Measurement(s)'] == input$y, ])
+       DT::datatable(strawberry[strawberry['Measurement(s)'] == input$y, ], 
+                     width = "50%")
      })
      
      
