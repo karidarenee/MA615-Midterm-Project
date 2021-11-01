@@ -172,15 +172,27 @@ options(warn = oldw)
 
 #Distribution Plots
 #Here I choose "Measurements = number" as the things we care about.
-library(lattice)
-df.num$bee<-factor(df.num$toxicity_bee, levels=c(1,2,3,4), labels = c("Slight","Moderate","High","NA"))
-colors = c("red","blue","black","grey") 
-lines=c(1,2,3,4) 
-points=c(15,16,17,18)
-key.bee<-list(title="bee level", space="bottom",columns=4, text=list(levels(df.num$bee)),points=list(pch=points,col=colors),
-              lines=list(col=colors,lty=lines),cex.title=1,cex=.9)
-densityplot(~Value,data=df.num,group=bee,main="Number Distribution by Toxicity_bee Level", xlab="Values of number",pch=points,lty=lines,col=colors,
-             lwd=2, jitter=.005, key=key.bee)
+
+ #Numbers & toxicity_bee
+library(sm)
+bee.level<-factor(df.num$toxicity_bee,levels = c(1,2,3), labels = c("1 Slight","2 Moderate","3 High"))
+# plot densities
+sm.density.compare(df.num$Value, df.num$toxicity_bee, xlab="Measured in Number")
+title(main="Numbers by toxicity_bee")
+# add legend via mouse click
+colfill_1<-c(2:(2+length(levels(bee.level))))
+legend(locator(1), levels(bee.level),fill = colfill_1)
+
+
+ #Numbers & carcinogen
+carcinogen.level<-factor(df.num$carcinogen,levels = c(1,2,3), labels = c("1 Possible","2 Probable","3 Known"))
+# plot densities
+sm.density.compare(df.num$Value, df.num$carcinogen, xlab="Measured in Number")
+title(main="Numbers by carcinogen")
+# add legend via mouse click
+colfill_2<-c(2:(2+length(levels(bee.level))))
+legend(locator(1), levels(carcinogen.level),fill = colfill_2)
+
 
 #Grouped Barchart
 library(ggplot2)
