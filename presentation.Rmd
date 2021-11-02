@@ -55,7 +55,5 @@ group_bars()
 ```
 
 # Conclusions:
-1.From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.
-2.From the density plots,
-3.From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
+1.From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.\n2.From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
 
