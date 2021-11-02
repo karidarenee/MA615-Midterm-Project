@@ -32,14 +32,14 @@ In this part, we wrangle and finish data cleaning that we will conduct EDA later
 
 ## 2.1 Import data sets strawberries and pesticides
 
-```{r}
+```{r, echo=FALSE}
 pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "latin1")
 strawb <- read.csv("Strawberries.csv", header = TRUE, fileEncoding = "latin1")
 ```
 
 ## 2.2 Separate the column 'Domain' into 2 columns "dname", "type".
 
-```{r}
+```{r, echo=FALSE}
 strawb <- strawb %>%  separate(col=Domain,
                                into = c("dname", "type" ), 
                                sep = ",", 
@@ -48,7 +48,7 @@ strawb <- strawb %>%  separate(col=Domain,
 
 ## 2.3 Make a copy of Domain.Category
 
-```{r}
+```{r, echo=FALSE}
 strawb %<>% 
   mutate(Chemicals = Domain.Category) %>% 
   relocate(Chemicals, .after = Domain.Category) 
@@ -56,13 +56,13 @@ strawb %<>%
 
 ## 2.4 Set Value Column to Numeric
 
-```{r}
+```{r, echo=FALSE}
 strawb$Value <- as.numeric(strawb$Value)
 ```
 
 ## 2.5 Create list of chemicals.
 
-```{r}
+```{r, echo=FALSE}
 strawb %<>% separate(col = Chemicals,
                      into = c("title", "details"),
                      sep = ":",
@@ -73,7 +73,7 @@ strawb %<>% mutate(details = str_extract(str_trim(details) ,"[^(].*[^)]") )
 
 ## 2.6 Select only chemical columns.
 
-```{r}
+```{r, echo=FALSE}
 strawb_chem <- strawb %>% filter((type=="FUNGICIDE")|
                                    (type=="HERBICIDE")|
                                    (type=="INSECTICIDE")|
@@ -83,7 +83,7 @@ strawb_chem <- strawb %>% filter((type=="FUNGICIDE")|
 
 ## 2.7 Drop no info columns.
 
-```{r}
+```{r, echo=FALSE}
 drop_no_info_cols <- function(df){
   cnames = colnames(strawb)
   T = NULL
@@ -97,14 +97,14 @@ strawb_chem <- drop_no_info_cols(strawb_chem)
 
 ## 2.8 Separate the name from the =Number.
 
-```{r}
+```{r, echo=FALSE}
 chemname <- str_split(strawb_chem$details, " =", simplify = TRUE)
 strawb_chem$chemical <- chemname[,1]
 ```
 
 ## 2.9 Format chemical names in the pesticide file.
 
-```{r}
+```{r, echo=FALSE}
 pesticides<- clean_names(pesticides)
 pesticides<- rename(pesticides, chemical = i_pesticide)
 pesticides <- mutate_all(pesticides, .funs=toupper)
@@ -112,41 +112,41 @@ pesticides <- mutate_all(pesticides, .funs=toupper)
 
 ## 2.10 Remove empty rows
 
-```{r}
+```{r, echo=FALSE}
 pesticides <- pesticides[!apply(pesticides == "", 1, all), ] 
 ```
 
 ## 2.11 Wrangle two data files.
 
-```{r}
+```{r, echo=FALSE}
 strawberry <- inner_join(strawb_chem, pesticides)
 strawberry <- select(strawberry, -c("Domain.Category", "title", "details"))
 ```
 
 ## 2.12 Separate the column 'Data.item' into 4 columns "Strawberries", "items", "discription", "units".
 
-```{r}
+```{r, echo=FALSE}
 strawberry %<>% separate(col = Data.Item, 
                    into = c("Strawberries", "items", "discription", "units"),
                    sep = ",",
                    fill = "right")
 ```
 
-```{r}
+```{r, echo=FALSE}
 distinct(strawberry, Strawberries)
 distinct(strawberry, items)
 distinct(strawberry, discription)
 distinct(strawberry, units)
 ```
 
-```{r}
+```{r, echo=FALSE}
 strawberry
 strawberry %<>%drop_na(Value)
 ```
 
 ## 2.13 Change names of variable "type","Carcinogen","Bee.Toxins".
 
-```{r}
+```{r, echo=FALSE}
 colnames(strawberry)[colnames(strawberry) %in% 
                        c("type")] <- c("chemical_type")
 colnames(strawberry)[colnames(strawberry) %in% 
@@ -157,13 +157,13 @@ colnames(strawberry)[colnames(strawberry) %in%
 
 ## 2.14 Use numerical values to represent the bee.toxin level and Carcinogen level.
 
-```{r}
+```{r, echo=FALSE}
 strawberry$toxicity_bee <- plyr::mapvalues(strawberry$toxicity_bee, 
                                          from = c("SLIGHT","MODERATE","HIGH"), to = c(1,2,3))
 strawberry$toxicity_bee <- as.numeric(strawberry$toxicity_bee)
 ```
 
-```{r}
+```{r, echo=FALSE}
 strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen, 
                                          from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
 strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
@@ -171,11 +171,11 @@ strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 
 ## 2.15 Remove missing values in carcinogen and toxicity_bee.
 
-```{r}
+```{r, echo=FALSE}
 strawberry_car <- subset(strawberry, carcinogen != "")
 ```
 
-```{r}
+```{r, echo=FALSE}
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 ```
 
@@ -183,7 +183,7 @@ strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 
 ## 3.1 Subsets by different measurement
 
-```{r}
+```{r, echo=FALSE}
 table(strawberry$`Measurement(s)`)
 strawberry$`Measurement(s)` = str_trim(strawberry$`Measurement(s)`)
 df.lb = subset(strawberry, `Measurement(s)` == "MEASURED IN LB")
@@ -195,7 +195,7 @@ df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING
 
 ## 3.2 Calculate proportions of strawberries by 'Measurements=Number'
 
-```{r}
+```{r, echo=FALSE}
 df.num<-tibble::as_tibble(df.num)
 #Count frequency/proportion for each state
 df.num %>%
@@ -207,13 +207,13 @@ df.num %>%
 
 ## 3.3 Calculate proportions of values(numbers) grouped by 'toxicity_bee'
 
-```{r}
+```{r, echo=FALSE}
 df.value<-tibble::as_tibble(df.num$Value)
 df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
 df.toxicity<-cbind(df.value,df.toxicity_bee)
 ```
 
-```{r}
+```{r, echo=FALSE}
 #Rename column 2 into 'toxicity_bee'
 names(df.toxicity)[2]<- 'toxicity_bee'
 
@@ -223,10 +223,9 @@ df.toxicity %>%
   mutate(freq = n / sum(n))
 ```
 
-```{r}
+```{r, echo=FALSE}
 options(warn = oldw)
 ```
-
 
 # 4. Reference
 
