@@ -23,7 +23,6 @@ source("figure_functions.R")
 2.Does the use of potentially bee toxic chemicals vary between states?    
 3.How Pesticide dosage changes by years and states?    
 
-
 # Maps of Pesticide Use
 ```{r, include = TRUE}
 map.straw(df.lb, "Pesticide Usage(in LB)\n2016 2018 2019")
@@ -37,7 +36,17 @@ map.straw(df.PCT, "Pesticide Usage(PCT OF AREA BEARING)\n2016 2018 2019")
 bee_tox()
 ```
 
-
-```{r,results = FALSE}
+# Applications of Carcinogens
+```{r,include = TRUE,warning=FALSE,results = FALSE}
 carc_apps()
+```
+
+# Comparison of Toxicities and Application
+```{r,include = TRUE}
+group_bars()
+```
+
+
+# Conclusions
+```{r,include = TRUE}
 ```
