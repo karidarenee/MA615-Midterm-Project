@@ -33,6 +33,8 @@ state_fig()
 map.straw(df.lb, "Strawberries Yield(in LB)\n2016 2018 2019")
 #map.straw(df.app, "Strawberries Yield(LB/ACRE/APPLICATION)\n2016 2018 2019")
 #map.straw(df.year, "Strawberries Yield(LB/ACRE/YEAR)\n2016 2018 2019")
+```
+```{r}
 map.straw(df.num,"Strawberries Yield(NUMBER)\n2016 2018 2019")
 #map.straw(df.PCT, "Strawberries Yield(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
