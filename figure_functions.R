@@ -89,13 +89,22 @@ carc_apps <- function(){
 library(ggplot2)
 library(plotly)
 group_bars <- function(){
- width_scale <- 10
+  
+  m = list(
+    l = 100,
+    r = 250,
+    b = 100,
+    t = 100,
+    pad = 0
+  )
+  
  p <- ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
    xlab("Carcinogen Level")+
    ylab("Average Number of Applications") + 
-   scale_color_discrete(name = "Level of Bee Toxicity")+
+   scale_color_discrete(name = "Bee Toxicity")+
    geom_jitter(width = 0.1)
- ggplotly(p,width = 11, height = 6)
+   
+ ggplotly(p,width = 1100, height = 600)%>% layout(margin = m)
   
 # # All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
 # # There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.

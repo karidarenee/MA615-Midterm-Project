@@ -20,7 +20,7 @@ source("wrangling.R", echo=TRUE)
 
 # 1. Introduction
 
-In this project, we use the data sets strawberries, insecticides, and herbicides-fungicides-other from USDA. We first wrangle these files, finish data cleaning and organizing the final data set; then we start to visualize and explore the data. This report focus on 2 main parts: Data cleaning and EDA.
+In this project, we use the data sets strawberries, insecticides, and herbicides-fungicides-other from USDA. We first wrangled these files, finished data cleaning and organizing the final data set; then we start to visualize and explore the data. This report focus on 2 main parts: Data cleaning and EDA.
 
 - Data cleaning: We wrangle the data sets strawberries, insecticides, and herbicides-fungicides-other. Separate some columns and eliminate the redundancy.
 - EDA: We plot ...

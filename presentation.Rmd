@@ -53,7 +53,7 @@ carc_apps()
 # Comparison of Toxicities and Application
 
 
-```{r,include = TRUE,fig.width = 10,fig.height = 6}
+```{r,include = TRUE,fig.width = 11.2,fig.height = 6}
 group_bars()
 ```
 
