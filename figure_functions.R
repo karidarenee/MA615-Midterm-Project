@@ -88,7 +88,7 @@ library(ggplot2)
 library(plotly)
 group_bars <- function(){
  p <- ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
-   xlab("Number of Applications")+
+   xlab("Carcinogen Level")+
    scale_color_discrete(name = "Level of Bee Toxicity")+
    geom_jitter(width = 0.1)
  ggplotly(p)
