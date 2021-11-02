@@ -63,7 +63,7 @@ library(sm)
 bee_tox <- function(){
   bee.level<-factor(df.num$toxicity_bee,levels = c(1,2,3), labels = c("1 Slight","2 Moderate","3 High"))
   # plot densities
-  sm.density.compare(df.num$Value, df.num$toxicity_bee, xlab="Number of Applications")
+  sm.density.compare(df.num$Value, df.num$toxicity_bee, xlab="Measured in Number")
   title(main="Number of applications grouped by bee toxicity")
  # add legend via mouse click
   colfill_1<-c(2:(2+length(levels(bee.level))))
