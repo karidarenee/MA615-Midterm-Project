@@ -19,9 +19,8 @@ source("figure_functions.R")
 ```
 
 # Possible Questions:  
-1.Does the use of potentially human toxic chemicals vary between states?  
-2.Does the use of potentially bee toxic chemicals vary between states?    
-3.How Pesticide dosage changes by years and states?    
+1.How does the strawberry yield vary between states and years?  
+2.Is there any relationship between Level of Bee Toxicity and Carcinogen Level？   
 
 # Proportions for each state
 ```{r, include = TRUE}
@@ -34,18 +33,19 @@ map.straw(df.lb, "Strawberries Yield(in LB)\n2016 2018 2019")
 #map.straw(df.app, "Strawberries Yield(LB/ACRE/APPLICATION)\n2016 2018 2019")
 #map.straw(df.year, "Strawberries Yield(LB/ACRE/YEAR)\n2016 2018 2019")
 ```
+
 ```{r}
 map.straw(df.num,"Strawberries Yield(NUMBER)\n2016 2018 2019")
 #map.straw(df.PCT, "Strawberries Yield(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
 
 # Applications of Bee Toxins
-```{r, include = TRUE,warning=FALSE,results = FALSE}
+```{r, include = F,warning=FALSE,results = FALSE}
 bee_tox()
 ```
 
 # Applications of Carcinogens
-```{r,include = TRUE,warning=FALSE,results = FALSE}
+```{r,include = F,warning=FALSE,results = FALSE}
 carc_apps()
 ```
 
