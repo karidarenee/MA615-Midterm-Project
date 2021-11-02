@@ -31,6 +31,10 @@ map.straw(df.year, "Pesticide Usage(LB/ACRE/YEAR)\n2016 2018 2019")
 map.straw(df.num,"Pesticide Usage(NUMBER)\n2016 2018 2019")
 map.straw(df.PCT, "Pesticide Usage(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
+# Proportions for each state
+```{r, include = TRUE}
+state_fig()
+```
 # Applications of Bee Toxins
 ```{r, include = TRUE,warning=FALSE,results = FALSE}
 bee_tox()
