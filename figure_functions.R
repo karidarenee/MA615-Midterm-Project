@@ -67,7 +67,7 @@ bee_tox <- function(){
   title(main="Number of applications grouped by bee toxicity")
  # add legend via mouse click
   colfill_1<-c(2:(2+length(levels(bee.level))))
-  legend("topright", levels(bee.level))
+  legend("topright", levels(bee.level),fill=colfill_1)
   
 }
 # 
