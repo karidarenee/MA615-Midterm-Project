@@ -170,35 +170,5 @@ df.toxicity %>%
 
 options(warn = oldw)
 
-#Distribution Plots
-#Here I choose "Measurements = number" as the things we care about.
-
- #Numbers & toxicity_bee
-library(sm)
-bee.level<-factor(df.num$toxicity_bee,levels = c(1,2,3), labels = c("1 Slight","2 Moderate","3 High"))
-# plot densities
-sm.density.compare(df.num$Value, df.num$toxicity_bee, xlab="Measured in Number")
-title(main="Numbers by toxicity_bee")
-# add legend via mouse click
-colfill_1<-c(2:(2+length(levels(bee.level))))
-legend(locator(1), levels(bee.level),fill = colfill_1)
-
-
- #Numbers & carcinogen
-carcinogen.level<-factor(df.num$carcinogen,levels = c(1,2,3), labels = c("1 Possible","2 Probable","3 Known"))
-# plot densities
-sm.density.compare(df.num$Value, df.num$carcinogen, xlab="Measured in Number")
-title(main="Numbers by carcinogen")
-# add legend via mouse click
-colfill_2<-c(2:(2+length(levels(bee.level))))
-legend(locator(1), levels(carcinogen.level),fill = colfill_2)
-
-
-#Grouped Barchart
-library(ggplot2)
-ggplot(df.num,aes(color=toxicity_bee, y=Value, x=carcinogen)) + 
-  geom_jitter(width = 0.1)
-# All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
-# There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
 
 
