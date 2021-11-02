@@ -96,3 +96,18 @@ group_bars <- function(){
 # # All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
 # # There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
 }
+
+#Plot of the proportions of strawberry measured in number for each state.
+library(plotly)
+fig <- plot_ly() 
+state_fig<-function(){
+  fig <- fig %>%
+    add_trace(
+      type = "pie",
+      name = "",
+      values = c(.78, .20, .02),
+      labels = c("California", "Florida", "Washington"),
+      text = c("Proportion in number", "Proportion in number", "Proportion in number"),
+      hovertemplate = "%{label}: <br>Popularity: %{percent} </br> %{text}")
+  fig
+}
