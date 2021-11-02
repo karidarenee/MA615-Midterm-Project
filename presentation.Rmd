@@ -3,26 +3,26 @@ title: "Presentation"
 author: "Group 3"
 date: "10/27/2021"
 output:
-  html_document:
-    df_print: paged
   revealjs::revealjs_presentation:
-    template: hw_temp_1.html
     theme: solarized
     highlight: pygments
-    css: reveal.css
 ---
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set( include=FALSE, echo=FALSE, message=FALSE, warning=FALSE)
 pacman::p_load("tidyverse","ggplot2","dplyr","png")
+source("wrangling.R")
+source("figure_functions.R")
 ```
 
-Possible Questions:
-1.Does the use of potentially human toxic chemicals vary between states?
-2.Does the use of potentially bee toxic chemicals vary between states?
-3.How Pesticide dosage changes by years and states?
+#Possible Questions:  
+1.Does the use of potentially human toxic chemicals vary between states?  
+2.Does the use of potentially bee toxic chemicals vary between states?    
+3.How Pesticide dosage changes by years and states?    
 
-```{r}
+
+# Maps of Pesticide Use
+```{r, include = TRUE}
 map.straw(df.lb, "Pesticide Usage(in LB)\n2016 2018 2019")
 map.straw(df.app, "Pesticide Usage(LB/ACRE/APPLICATION)\n2016 2018 2019")
 map.straw(df.year, "Pesticide Usage(LB/ACRE/YEAR)\n2016 2018 2019")
