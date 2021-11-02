@@ -19,17 +19,14 @@ sidebar <- dashboardSidebar(sidebarMenu(
              href = "https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3"),
     menuItem("Select X value:", 
              selectInput('x', 'X', choices = c("State", "Year"),
-                         selected = "State")),
-    menuItem("Select Y value:",
-             selectInput('y', 'Y', choices = unique(strawberry["Measurement(s)"]),
-                         selected = " MEASURED IN LB / ACRE / YEAR"))
+                         selected = "State"))
 ))
 #create body
 frow0 <- fluidRow( 
   column(12,
-         p("Welcome to our shiny app. Here you can explore strawberry pesticide 
-           applications by state and year. On the left side panel, you can 
-           select whether you want to examine values grouped by year or state 
+         p("Welcome to our shiny app. Here you can explore strawberry yield by 
+           state and year. On the left side panel, you can select whether you 
+           want to examine values grouped by year or state 
            and the unit in which the values are measured. Both the barchart and
            table will update to match your selections. ", 
            style="text-align:justify;color:white
@@ -128,9 +125,9 @@ server <- function(input, output) {
      
      output$outplot <-  renderPlot({
        x_val <- input$x
-       unit <-  input$y
+       unit <- "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE"
        
-       straw_select <- strawberry[strawberry["Measurement(s)"] == as.character(unit),]
+       straw_select <- strawb_yield[strawb_yield["Data.Item"] == unit,]
        straw_select %<>% 
          #Step 2
          group_by_at(.vars = c(x_val)) %>% 
@@ -144,26 +141,25 @@ server <- function(input, output) {
        
        ggplot(straw_select) +
          geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#00a65a")+
-         geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=min_err, ymax=max_err), width=0,
-                       position=position_dodge(.9))+ 
-         xlab(input$x) +
-         ylab(paste(input$y))+
-         labs(title = "Mean of Selected Variables with St.Dev Errors")+
+          geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=min_err, ymax=max_err), width=0,
+                        position=position_dodge(.9)) +
+         xlab(x_val) +
+         ylab("YIELD, MEASURED IN CWT / ACRE")+
+         labs(title = "Mean of Strawberry Yield with St.Dev Errors")+
          scale_y_continuous(limits = c(0, NA)) +
          theme(text=element_text(size=20), #change font size of all text
-               axis.text=element_text(size=20), #change font size of axis text
-               axis.title=element_text(size=20), #change font size of axis titles
-               plot.title=element_text(size=20), #change font size of plot title
-               legend.text=element_text(size=20), #change font size of legend text
-               legend.title=element_text(size=20)) #change font size of legend title   
+                axis.text=element_text(size=15), #change font size of axis text
+                axis.title=element_text(size=15), #change font size of axis titles
+                plot.title=element_text(size=20) #change font size of plot title
+         )
        
      })
      
      
      output$mytable <- renderDataTable({
-       DT::datatable(strawberry[strawberry['Measurement(s)'] == input$y, c(1,2,5:15)], 
+       DT::datatable(strawb_yield[strawb_yield['Data.Item'] == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], 
                      options = list(paging = TRUE,    ## paginate the output
-                                    pageLength = 5,  ## number of rows to output for each page
+                                    pageLength = 15,  ## number of rows to output for each page
                                     scrollX = TRUE,   ## enable scrolling on X axis
                                     scrollY = TRUE)   ## enable scrolling on Y axis
                      )

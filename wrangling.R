@@ -48,6 +48,11 @@ strawb_chem <- strawb %>% filter((type=="FUNGICIDE")|
                                    (type== "OTHER"))
 
 
+strawb_yield <- strawb %>% filter((Data.Item=="STRAWBERRIES - YIELD, MEASURED IN TONS / ACRE")|
+                                    (Data.Item=="STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE"))
+
+
+
 #drop no info columns
 drop_no_info_cols <- function(df){
   cnames = colnames(strawb)
@@ -57,6 +62,7 @@ drop_no_info_cols <- function(df){
   return(select(df, !all_of(drop_cols)))
 }
 
+strawb_yield <- drop_no_info_cols(strawb_yield)
 strawb_chem <- drop_no_info_cols(strawb_chem)
 #------------------------------------------------------------------------------#
 
