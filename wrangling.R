@@ -134,8 +134,9 @@ table(strawberry_car$chemical_type)
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 
 table(strawberry_car_insec$chemical_type)
-
-
+#' Interesting finding: after we get the strawberry_car_insec, 
+#' we found that bees are only exposed to pesticides which contains level 1 carcinogen,
+#' For pesticides containing level 2 and 3 carcinogen, there exist no bee toxins.
 
 #Subsets by different measurement
 table(strawberry$`Measurement(s)`)
