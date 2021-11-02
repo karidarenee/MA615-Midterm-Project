@@ -156,7 +156,7 @@ df.num %>%
   mutate(freq = n / sum(n))
 #I think we can show the proportions of each states on our map using mouse over.
 
-#Calculate proportions of values(numbers) grouped by 'toxicity_bee'
+#Calculate proportions of values(numbers) grouped by 'toxicity_bee'.
 df.value<-tibble::as_tibble(df.num$Value)
 df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
 df.toxicity<-cbind(df.value,df.toxicity_bee)
@@ -169,9 +169,3 @@ df.toxicity %>%
   mutate(freq = n / sum(n))
 
 options(warn = oldw)
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 97443d071fcc1f52d5216e6084cc6147f22352fc
