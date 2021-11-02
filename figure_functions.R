@@ -75,18 +75,24 @@ bee_tox <- function(){
 carc_apps <- function(){
  carcinogen.level<-factor(df.num$carcinogen,levels = c(1,2,3), labels = c("1 Possible","2 Probable","3 Known"))
  # plot densities
- sm.density.compare(df.num$Value, df.num$carcinogen, xlab="Measured in Number")
+ x <- sm.density.compare(df.num$Value, df.num$carcinogen, xlab="Measured in Number")
  title(main="Numbers of carcinogen applications")
  # add legend via mouse click
  colfill_2<-c(2:(2+length(levels(carcinogen.level))))
  legend("topright", levels(carcinogen.level),fill = colfill_2)
+ return(x)
 }
  
 # #Grouped Barchart
- library(ggplot2)
+library(ggplot2)
+library(plotly)
 group_bars <- function(){
- ggplot(df.num,aes(color=toxicity_bee, y=Value, x=carcinogen)) + 
+ p <- ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
+   xlab("Number of Applications")+
+   cale_color_discrete(name = "Level of Bee Toxicity")+
    geom_jitter(width = 0.1)
+ ggplotly(p)
+  
 # # All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
 # # There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
 }
