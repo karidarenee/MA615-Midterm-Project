@@ -58,7 +58,7 @@ map.straw <- function(df, title.straw){
 # #Distribution Plots
 # #Here I choose "Measurements = number" as the things we care about.
 # 
-# #Numbers & toxicity_bee
+# #Numbers & toxicity_bee.
 library(sm)
 bee_tox <- function(){
   bee.level<-factor(df.num$toxicity_bee,levels = c(1,2,3), labels = c("1 Slight","2 Moderate","3 High"))
