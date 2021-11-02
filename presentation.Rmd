@@ -27,25 +27,27 @@ source("figure_functions.R")
 state_fig()
 ```
 
-# Maps of Strawberries Yield
+# Maps of Strawberries Yield in LB
 ```{r, include = TRUE}
 map.straw(df.lb, "Strawberries Yield(in LB)\n2016 2018 2019")
 #map.straw(df.app, "Strawberries Yield(LB/ACRE/APPLICATION)\n2016 2018 2019")
 #map.straw(df.year, "Strawberries Yield(LB/ACRE/YEAR)\n2016 2018 2019")
 ```
 
-```{r}
+# Maps of Strawberries Yield in Number
+
+```{r, include = TRUE}
 map.straw(df.num,"Strawberries Yield(NUMBER)\n2016 2018 2019")
 #map.straw(df.PCT, "Strawberries Yield(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
 
-# Applications of Bee Toxins
 ```{r, include = F,warning=FALSE,results = FALSE}
+# Applications of Bee Toxins
 bee_tox()
 ```
 
-# Applications of Carcinogens
 ```{r,include = F,warning=FALSE,results = FALSE}
+# Applications of Carcinogens
 carc_apps()
 ```
 
@@ -55,7 +57,5 @@ group_bars()
 ```
 
 # Conclusions:
-1.From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.
-2.From the density plots,
-3.From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
-
+1.From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.  
+2.From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.
