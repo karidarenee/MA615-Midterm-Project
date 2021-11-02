@@ -27,17 +27,16 @@ source("figure_functions.R")
 state_fig()
 ```
 
-# Maps of Strawberries Yield in LB
+# Maps of Strawberries Yield in CWT/Acre
 ```{r, include = TRUE}
-map.straw(df.lb, "Strawberries Yield(in LB)\n2016 2018 2019")
+map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
 #map.straw(df.app, "Strawberries Yield(LB/ACRE/APPLICATION)\n2016 2018 2019")
 #map.straw(df.year, "Strawberries Yield(LB/ACRE/YEAR)\n2016 2018 2019")
 ```
 
-# Maps of Strawberries Yield in Number
-
+# Maps of Pesticide Applications
 ```{r, include = TRUE}
-map.straw(df.num,"Strawberries Yield(NUMBER)\n2016 2018 2019")
+map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 #map.straw(df.PCT, "Strawberries Yield(PCT OF AREA BEARING)\n2016 2018 2019") 
 ```
 
@@ -52,7 +51,9 @@ carc_apps()
 ```
 
 # Comparison of Toxicities and Application
-```{r,include = TRUE}
+
+
+```{r,include = TRUE,fig.width = 10,fig.height = 6}
 group_bars()
 ```
 

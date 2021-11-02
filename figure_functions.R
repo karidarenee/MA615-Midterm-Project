@@ -28,12 +28,14 @@ bar_plt <- function(x, y) {
 
 map.straw <- function(df, title.straw){
   library(plotly)
+  library(plyr)
+  
   states = read_csv("csvData.csv") 
   states$State = tolower(states$State) 
   df$State = tolower(df$State) 
-  library(plyr)
+  
+  
   df.lb2 = ddply(df,c("State", "Year"),numcolwise(sum)) #I sum the amount of pesticide by year for each state
-
   df_map = left_join(df.lb2, states, by = "State") %>%
     select(Year, State, Code, Value)%>%
     mutate(hover = paste0(State, "\n", Value))
@@ -43,9 +45,9 @@ map.straw <- function(df, title.straw){
                            locationmode = "USA-states", 
                            frame = ~Year) %>%
     add_trace(locations = ~Code,
-              z = ~Value,#colored by z
+              z = ~Value, #colored by z
               color = ~Value,
-              colorscale = "Electric",
+              colorscale = "Viridis",
               text = ~hover,
               hoverinfo = "text")%>%
     layout(geo = list(scope = 'usa'),
@@ -87,11 +89,13 @@ carc_apps <- function(){
 library(ggplot2)
 library(plotly)
 group_bars <- function(){
+ width_scale <- 10
  p <- ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
    xlab("Carcinogen Level")+
+   ylab("Average Number of Applications") + 
    scale_color_discrete(name = "Level of Bee Toxicity")+
    geom_jitter(width = 0.1)
- ggplotly(p)
+ ggplotly(p,width = 11, height = 6)
   
 # # All strawberries measured in number with toxicity_bee exist with slight level of carcinogen. 
 # # There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.

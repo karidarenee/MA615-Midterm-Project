@@ -26,9 +26,10 @@ frow0 <- fluidRow(
   column(12,
          p("Welcome to our shiny app. Here you can explore strawberry yield by 
            state and year. On the left side panel, you can select whether you 
-           want to examine values grouped by year or state 
-           and the unit in which the values are measured. Both the barchart and
-           table will update to match your selections. ", 
+           want to examine values grouped by year or state. Yield is measured in 
+           CWT or hunderedweight which, in the United States is equivalent to 
+           100 pounds. Both the barchart and table will update to match your 
+           selections. ", 
            style="text-align:justify;color:white
            ;background-color:#00a65a;padding:15px;font-size: 17px;"),
   )
