@@ -20,7 +20,7 @@ source("figure_functions.R")
 2.How does the pesticide application vary between states and years？  
 3.Is there any relationship between Level of Bee Toxicity and Carcinogen Level?
 
-# Proportions for each state
+# Proportion of pesticides dataset
 ```{r, include = TRUE, fig.align='center'}
 state_fig()
 ```

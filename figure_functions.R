@@ -1,4 +1,4 @@
-pacman::p_load(ggplot2, magrittr, dplyr)
+pacman::p_load(ggplot2, magrittr, dplyr, plotly)
 
 bar_plt <- function(x, y) {
   x_val <- x
@@ -86,8 +86,7 @@ carc_apps <- function(){
 }
  
 # #Grouped Barchart
-library(ggplot2)
-library(plotly)
+
 group_bars <- function(){
   
   m = list(
@@ -111,16 +110,25 @@ group_bars <- function(){
 }
 
 #Plot of the proportions of strawberry measured in number for each state.
-library(plotly)
+
 fig <- plot_ly() 
 state_fig<-function(){
+  m = list(
+    l = 100,
+    r = 100,
+    b = 100,
+    t = 100,
+    pad = 0
+  )
   fig <- fig %>%
     add_trace(
       type = "pie",
       name = "",
       values = c(.78, .20, .02),
       labels = c("California", "Florida", "Washington"),
-      text = c("Proportion in number", "Proportion in number", "Proportion in number"),
-      hovertemplate = "%{label}: <br>Popularity: %{percent} </br> %{text}")
+      text = c("Proportion of Dataset", "Proportion of Dataset", "Proportion of Dataset"),
+      hovertemplate = "%{label}: <br>Popularity: %{percent} </br> %{text}") %>% 
+    layout(margin = m)
   fig
 }
+
