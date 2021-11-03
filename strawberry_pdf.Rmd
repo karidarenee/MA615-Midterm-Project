@@ -32,10 +32,18 @@ In this project, we use the data sets strawberries, insecticides, and herbicides
 
 Besides, we deploy a shiny app [Shiny_strawberries](https://rongli.shinyapps.io/shiny/) for data display and exploration.
 
+# 2. Research Questions
 
-# 2. EDA -- We added mouse over into our plots.
+* Comparison of strawberry yields between states.  
 
-# 2.1 Show a pie chart with proportion in number of three states: CA, FL, WA
+* How does the pesticide application vary between states and years?  
+
+* Is there any relationship between Level of Bee Toxicity and Carcinogen Level?  
+
+
+# 3. EDA -- We added mouse over into our plots.
+
+# 3.1 Show a pie chart with proportion in number of three states: CA, FL, WA
 ```{r, include = TRUE}
 df<-data.frame(
   group = c("California","Florida","Washington"),
@@ -49,19 +57,19 @@ pie
 ```
 The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
-# 2.2 Show a map of Strawberries Yield measured in CWT/Acre
+# 3.2 Show a map of Strawberries Yield measured in CWT/Acre
 ```{r, include = TRUE}
 map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
 ```
 
 
-# 2.3 Show a map of average number of pesticide application
+# 3.3 Show a map of average number of pesticide application
 ```{r, include = TRUE}
 map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 ```
 
 
-# 2.4 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
+# 3.4 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
 ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
    xlab("Carcinogen Level")+
@@ -71,14 +79,14 @@ ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) +
 ```
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
-# 2.x Plot the mean yields by state
+# 3.5 Plot the mean yields by state
 Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. California clearly produces the most strawberries, followed by Florida and North Carolina. As the standard deviation error bars show, each state reliably produces similar quantities of strawberries across the years for which we have data. 
 ```{r}
 shiny_bar("State")
 ```
 
 
-# 2.x Plot the mean yields by year
+# 3.5 Plot the mean yields by year
 Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. We can see that in 2019 and 2020 there are very small sample sizes, and, as a result, large standard deviations. Each year also has a large standard deviation, since the selected states produce very different quantitites of strawberries. 
 ```{r}
 shiny_bar("Year")
