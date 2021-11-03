@@ -163,3 +163,37 @@ state_fig<-function(){
   fig
 }
 
+
+
+shiny_bar <- function(x_val){
+  unit <- "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE"
+  
+  straw_select <- strawb_yield[strawb_yield["Data.Item"] == unit,]
+  straw_select %<>% 
+    #Step 2
+    group_by_at(.vars = c(x_val)) %>% 
+    #Step 3
+    summarise(mean = mean(Value,na.rm=TRUE), sd = sd(Value), count = n())%>% 
+    as_tibble()
+  
+  straw_select$min_err <- ifelse((straw_select$mean-straw_select$sd<0),0,straw_select$mean-straw_select$sd)
+  straw_select$max_err <- straw_select$mean+straw_select$sd
+  
+  
+  ggplot(straw_select) +
+    geom_col(aes(x = unlist(straw_select[x_val]), y = unlist(mean)), fill = "#00a65a")+
+    geom_errorbar(aes(x =unlist(straw_select[x_val]), ymin=min_err, ymax=max_err), width=0,
+                  position=position_dodge(.9)) +
+    xlab(x_val) +
+    ylab("YIELD, MEASURED IN CWT / ACRE")+
+    labs(title = "Mean of Strawberry Yield with St.Dev Errors and Count")+
+    geom_text(aes(x=unlist(straw_select[x_val]),
+                  y= rep(-15,dim(straw_select)[1]), 
+                  label=unlist(count)), size=6, color = "#74776B") + 
+    scale_y_continuous(limits = c(-20, NA)) +
+    theme(text=element_text(size=7), #change font size of all text
+          axis.text=element_text(size=10), #change font size of axis text
+          axis.title=element_text(size=10), #change font size of axis titles
+          plot.title=element_text(size=15) #change font size of plot title
+    )
+}

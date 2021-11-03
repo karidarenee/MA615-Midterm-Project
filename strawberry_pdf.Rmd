@@ -60,6 +60,13 @@ group_bars()
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
 
+# 2.x Plot the mean yields by year
+```{r, fig.cap= Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. }
+shiny_bar("Year")
+```
+
+
+
 # 3. Reference
 
 https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3
