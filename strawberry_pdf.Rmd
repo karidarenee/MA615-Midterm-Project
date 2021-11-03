@@ -181,7 +181,7 @@ strawberry_car <- subset(strawberry, carcinogen != "")
 strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
 ```
 
-# 3. EDA
+# 3. EDA -- We added mouse over into our plots.
 
 ## 3.1 Subsets by different measurement
 
@@ -204,7 +204,6 @@ df.num %>%
   group_by(State) %>%
   summarise(n = n()) %>%
   mutate(freq = n / sum(n))
-#I think we can show the proportions of each states on our map using mouse over.
 ```
 
 ## 3.3 Calculate proportions of values(numbers) grouped by 'toxicity_bee'
