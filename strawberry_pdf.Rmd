@@ -19,6 +19,9 @@ source("wrangling.R", echo=TRUE)
 source("figure_functions.R", echo = TRUE)
 ```
 
+![Strawberries](strawberry.jpg)
+\newpage
+
 # 1. Introduction
 
 In this project, we use the data sets strawberries, insecticides, and herbicides-fungicides-other from USDA. We first wrangled these files, finished data cleaning and organizing the final data set; then we start to visualize and explore the data. This report focus on 2 main parts: Data cleaning and EDA.
