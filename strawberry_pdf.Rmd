@@ -35,70 +35,25 @@ Besides, we deploy a shiny app [Shiny_strawberries](https://rongli.shinyapps.io/
 
 # 2. EDA -- We added mouse over into our plots.
 
-## 2.1 Subsets by different measurement
-
-```{r, echo=FALSE}
-table(strawberry$`Measurement(s)`)
-strawberry$`Measurement(s)` = str_trim(strawberry$`Measurement(s)`)
-df.lb = subset(strawberry, `Measurement(s)` == "MEASURED IN LB")
-df.app = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / APPLICATION")
-df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
-df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
-df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
-```
-
-## 2.2 Calculate proportions of strawberries by 'Measurements=Number'
-
-```{r, echo=FALSE}
-df.num<-tibble::as_tibble(df.num)
-#Count frequency/proportion for each state
-df.num %>%
-  group_by(State) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
-```
-
-## 2.3 Calculate proportions of values(numbers) grouped by 'toxicity_bee'
-
-```{r, echo=FALSE}
-df.value<-tibble::as_tibble(df.num$Value)
-df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
-df.toxicity<-cbind(df.value,df.toxicity_bee)
-```
-
-```{r, echo=FALSE}
-#Rename column 2 into 'toxicity_bee'
-names(df.toxicity)[2]<- 'toxicity_bee'
-
-df.toxicity %>%
-  group_by(toxicity_bee) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
-```
-
-```{r, echo=FALSE}
-options(warn = oldw)
-```
-
-# 2.4 Show a pie chart with proportion in number of three states: CA, FL, WA
+# 2.1 Show a pie chart with proportion in number of three states: CA, FL, WA
 ```{r, include = TRUE}
 state_fig()
 ```
 The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
-# 2.5 Show a map of Strawberries Yield measured in CWT/Acre
+# 2.2 Show a map of Strawberries Yield measured in CWT/Acre
 ```{r, include = TRUE}
 map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
 ```
 
 
-# 2.6 Show a map of average number of pesticide application
+# 2.3 Show a map of average number of pesticide application
 ```{r, include = TRUE}
 map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 ```
 
 
-# 2.7 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
+# 2.4 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
 group_bars()
 ```
