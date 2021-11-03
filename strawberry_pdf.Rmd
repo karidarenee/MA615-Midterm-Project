@@ -139,13 +139,14 @@ distinct(strawberry, items)
 distinct(strawberry, discription)
 distinct(strawberry, units)
 ```
+## 2.13 Drop the missing value of 'Value'.
 
 ```{r, echo=FALSE}
 strawberry
 strawberry %<>%drop_na(Value)
 ```
 
-## 2.13 Change names of variable "type","Carcinogen","Bee.Toxins".
+## 2.14 Change names of variable "type","Carcinogen","Bee.Toxins".
 
 ```{r, echo=FALSE}
 colnames(strawberry)[colnames(strawberry) %in% 
@@ -156,7 +157,7 @@ colnames(strawberry)[colnames(strawberry) %in%
                        c("bee_toxins")] <- c("toxicity_bee")
 ```
 
-## 2.14 Use numerical values to represent the bee.toxin level and Carcinogen level.
+## 2.15 Use numerical values to represent the bee.toxin level and Carcinogen level.
 
 ```{r, echo=FALSE}
 strawberry$toxicity_bee <- plyr::mapvalues(strawberry$toxicity_bee, 
@@ -170,7 +171,7 @@ strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen,
 strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 ```
 
-## 2.15 Remove missing values in carcinogen and toxicity_bee.
+## 2.16 Remove missing values in carcinogen and toxicity_bee.
 
 ```{r, echo=FALSE}
 strawberry_car <- subset(strawberry, carcinogen != "")
