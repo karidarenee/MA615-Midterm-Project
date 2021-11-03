@@ -116,42 +116,8 @@ strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen,
 strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
 
 # remove missing values in carcinogen.
-strawberry_car <- subset(strawberry, carcinogen != "")
+# strawberry_car <- subset(strawberry, carcinogen != "")
 
 
 # remove missing values in toxicity_bee
-strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
-#' Interesting finding: after we get the strawberry_car_insec, 
-#' we found that bees are only exposed to pesticides which contains level 1 carcinogen,
-#' For pesticides containing level 2 and 3 carcinogen, there exist no bee toxins.
-
-#Subsets by different measurement
-strawberry$`Measurement(s)` = str_trim(strawberry$`Measurement(s)`)
-df.lb = subset(strawberry, `Measurement(s)` == "MEASURED IN LB")
-df.app = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / APPLICATION")
-df.year = subset(strawberry, `Measurement(s)` == "MEASURED IN LB / ACRE / YEAR")
-df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
-df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
-
-#Calculate proportions of strawberries by 'Measurements=Number'
-df.num<-tibble::as_tibble(df.num)
-
-#Count frequency/proportion for each state
-df.num %>%
-  group_by(State) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
-
-#Calculate proportions of values(numbers) grouped by 'toxicity_bee'.
-df.value<-tibble::as_tibble(df.num$Value)
-df.toxicity_bee<-tibble::as_tibble(df.num$toxicity_bee)
-df.toxicity<-cbind(df.value,df.toxicity_bee)
-
-#Rename column 2 into 'toxicity_bee'
-names(df.toxicity)[2]<- 'toxicity_bee'
-df.toxicity %>%
-  group_by(toxicity_bee) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
-
-options(warn = oldw)
+# strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")

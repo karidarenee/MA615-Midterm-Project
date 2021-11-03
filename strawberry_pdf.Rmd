@@ -14,10 +14,14 @@ pacman::p_load("tidyverse","knitr","kableExtra","ggplot2", "ggbiplot")
 options(warn = -1)
 ```
 
-```{r}
+```{r, include=FALSE}
 source("wrangling.R", echo=TRUE)
 source("figure_functions.R", echo = TRUE)
 ```
+
+
+![Strawberries](strawberry.jpg)
+\newpage
 
 # 1. Introduction
 
