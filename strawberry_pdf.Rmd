@@ -24,7 +24,7 @@ source("figure_functions.R", echo = TRUE)
 In this project, we use the data sets strawberries, insecticides, and herbicides-fungicides-other from USDA. We first wrangled these files, finished data cleaning and organizing the final data set; then we start to visualize and explore the data. This report focus on 2 main parts: Data cleaning and EDA.
 
 - Data cleaning: We wrangle the data sets strawberries, insecticides, and herbicides-fungicides-other. Separate some columns and eliminate the redundancy.
-- EDA: We plot ...
+- EDA: We plot the proportion of dataset by states, maps of comparision strawberry yields between states and years, dot plot of the relationship between level of Bee Toxicity and Carcinogen level.
 
 Besides, we deploy a shiny app [Shiny_strawberries](https://rongli.shinyapps.io/shiny/) for data display and exploration.
 
