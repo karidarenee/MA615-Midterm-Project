@@ -1,7 +1,7 @@
 ---
 title: "Strawberry PDF Document"
-author: "Group 3"
-date: "10/27/2021"
+author: "Group 3: Rose Determan, Yongrong Chai, Wuji Shan, Tong Sun"
+date: "11/03/2021"
 output: pdf_document
 ---
 *from assignment: * Using R, produce a pdf document presenting your results. The
