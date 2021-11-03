@@ -57,19 +57,17 @@ pie
 ```
 The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
-# 3.2 Show a map of Strawberries Yield measured in CWT/Acre
-```{r, include = TRUE}
-map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
-```
+# 3.2 Show a map of Strawberries Yield measured in CWT/Acre and Pesticide Application
+
+![Strawberries](Maps.png)
 
 
-# 3.3 Show a map of average number of pesticide application
-```{r, include = TRUE}
-map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
-```
+The maps above shows that there was a large increasing from 2018 to 2019, and based on the research, with the development of newer varieties, strawberry season has expanded in both California and Florida. That’s the reason of yield increasing. The other thing is that California produces strawberries year-round, and that’s why strawberries are primarily grown in California.
+
+For the comparison about average number of pesticide applications, there is an interesting founding here, there is a negative relationship between strawberry yield and pesticide applications from 2018 to 2019.\newpage
 
 
-# 3.4 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
+# 3.3 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
 ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
    xlab("Carcinogen Level")+
@@ -79,7 +77,7 @@ ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) +
 ```
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
-# 3.5 Plot the mean yields by state
+# 3.4 Plot the mean yields by state
 Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. California clearly produces the most strawberries, followed by Florida and North Carolina. As the standard deviation error bars show, each state reliably produces similar quantities of strawberries across the years for which we have data. 
 ```{r}
 shiny_bar("State")
@@ -98,4 +96,4 @@ shiny_bar("Year")
 
 https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3
 
-
+https://www.dailymail.co.uk/health/article-4710590/Why-buy-organic-strawberries.html
