@@ -16,6 +16,7 @@ options(warn = -1)
 
 ```{r}
 source("wrangling.R", echo=TRUE)
+source("figure_functions.R", echo = TRUE)
 ```
 
 # 1. Introduction
@@ -227,9 +228,28 @@ df.toxicity %>%
 options(warn = oldw)
 ```
 
+# Show a pie chart with proportion in number of three states: CA, FL, WA
+```{r, include = TRUE}
+state_fig()
+```
+
+# Show a map of Strawberries Yield measured in CWT/Acre
+```{r}
+map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
+```
+
+# Show a map of average number of pesticide application
+```{r}
+map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
+```
+
+# Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
+```{r,include = TRUE}
+group_bars()
+```
+
 # 4. Reference
 
-
-
+https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3
 
 
