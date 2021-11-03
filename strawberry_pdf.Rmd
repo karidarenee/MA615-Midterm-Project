@@ -37,7 +37,15 @@ Besides, we deploy a shiny app [Shiny_strawberries](https://rongli.shinyapps.io/
 
 # 2.1 Show a pie chart with proportion in number of three states: CA, FL, WA
 ```{r, include = TRUE}
-state_fig()
+df<-data.frame(
+  group = c("California","Florida","Washington"),
+  value = c(.78,.20,.02)
+)
+head(df)
+bp<-ggplot(df,aes(x="",y=value,fill=group))+
+  geom_bar(width = 1,stat = "identity")
+pie<-bp + coord_polar("y",start = 0)
+pie
 ```
 The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
