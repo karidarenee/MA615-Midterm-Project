@@ -55,7 +55,11 @@ map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 
 # 2.4 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
-group_bars()
+ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) + 
+   xlab("Carcinogen Level")+
+   ylab("Average Number of Applications") + 
+   scale_color_discrete(name = "Bee Toxicity")+
+   geom_jitter(width = 0.1)
 ```
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
