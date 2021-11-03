@@ -167,13 +167,12 @@ state_fig<-function(){
 
 shiny_bar <- function(x_val){
   unit <- "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE"
-  
   straw_select <- strawb_yield[strawb_yield["Data.Item"] == unit,]
   straw_select %<>% 
     #Step 2
-    group_by_at(.vars = c(x_val)) %>% 
+    dplyr::group_by_at(.vars = c(x_val)) %>% 
     #Step 3
-    summarise(mean = mean(Value,na.rm=TRUE), sd = sd(Value), count = n())%>% 
+    dplyr::summarise(mean = mean(Value,na.rm=TRUE), sd = sd(Value), count = dplyr::n())%>% 
     as_tibble()
   
   straw_select$min_err <- ifelse((straw_select$mean-straw_select$sd<0),0,straw_select$mean-straw_select$sd)

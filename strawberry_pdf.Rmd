@@ -63,8 +63,15 @@ ggplot(df.num,aes(color=as.factor(toxicity_bee), y=Value, x=carcinogen)) +
 ```
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
+# 2.x Plot the mean yields by state
+Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. California clearly produces the most strawberries, followed by Florida and North Carolina. As the standard deviation error bars show, each state reliably produces similar quantities of strawberries across the years for which we have data. 
+```{r}
+shiny_bar("State")
+```
+
 
 # 2.x Plot the mean yields by year
+Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. We can see that in 2019 and 2020 there are very small sample sizes, and, as a result, large standard deviations. Each year also has a large standard deviation, since the selected states produce very different quantitites of strawberries. 
 ```{r}
 shiny_bar("Year")
 ```
