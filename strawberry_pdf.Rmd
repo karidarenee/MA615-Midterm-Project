@@ -65,7 +65,7 @@ From this graph, we can get the interesting finding that all strawberries measur
 
 
 # 2.x Plot the mean yields by year
-```{r, fig.cap= Strawberry yield in CWT/acre with standard deviation error bars. The number below each bar indicates the sample size represented in the bar. }
+```{r}
 shiny_bar("Year")
 ```
 
