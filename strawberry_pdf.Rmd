@@ -232,21 +232,26 @@ options(warn = oldw)
 ```{r, include = TRUE}
 state_fig()
 ```
+The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
 # Show a map of Strawberries Yield measured in CWT/Acre
-```{r}
+```{r, include = TRUE}
 map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
 ```
 
+
 # Show a map of average number of pesticide application
-```{r}
+```{r, include = TRUE}
 map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 ```
+
 
 # Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
 group_bars()
 ```
+From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
+
 
 # 4. Reference
 
