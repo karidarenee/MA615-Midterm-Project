@@ -16,9 +16,11 @@ source("figure_functions.R")
 ```
 
 # Possible Questions:  
-1.Comparison of strawberry yields between states.  
-2.How does the pesticide application vary between states and years？  
-3.Is there any relationship between Level of Bee Toxicity and Carcinogen Level?
+* Comparison of strawberry yields between states.  
+
+* How does the pesticide application vary between states and years？  
+
+* Is there any relationship between Level of Bee Toxicity and Carcinogen Level?
 
 # Proportion of pesticides dataset
 ```{r, include = TRUE, fig.align='center'}
@@ -56,5 +58,6 @@ group_bars()
 ```
 
 # Conclusions:
-1.From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.  
-2.From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.  
+* From the bin plot, we can see that the proportions of strawberries numbers have a significant difference between states. California has the largest share and Washington has the smallest.  
+
+* From the bar chart, we can see that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen.There does not exist strawberries measured in number with toxicity_bee in the 2 and 3 level of carcinogen.  
