@@ -19,9 +19,6 @@ source("wrangling.R", echo=TRUE)
 source("figure_functions.R", echo = TRUE)
 ```
 
-![Strawberries](strawberry.jpg)
-\newpage
-
 # 1. Introduction
 
 In this project, we use the data sets strawberries, insecticides, and herbicides-fungicides-other from USDA. We first wrangled these files, finished data cleaning and organizing the final data set; then we start to visualize and explore the data. This report focus on 2 main parts: Data cleaning and EDA.
@@ -31,162 +28,10 @@ In this project, we use the data sets strawberries, insecticides, and herbicides
 
 Besides, we deploy a shiny app [Shiny_strawberries](https://rongli.shinyapps.io/shiny/) for data display and exploration.
 
-# 2. Data cleaning
-In this part, we wrangle and finish data cleaning that we will conduct EDA later.
 
-## 2.1 Import data sets strawberries and pesticides
+# 2. EDA -- We added mouse over into our plots.
 
-```{r, echo=FALSE}
-pesticides <- read.csv("Pesticides.csv", header = TRUE, fileEncoding = "latin1")
-strawb <- read.csv("Strawberries.csv", header = TRUE, fileEncoding = "latin1")
-```
-
-## 2.2 Separate the column 'Domain' into 2 columns "dname", "type".
-
-```{r, echo=FALSE}
-strawb <- strawb %>%  separate(col=Domain,
-                               into = c("dname", "type" ), 
-                               sep = ",", 
-                               fill = "right")
-```
-
-## 2.3 Make a copy of Domain.Category
-
-```{r, echo=FALSE}
-strawb %<>% 
-  mutate(Chemicals = Domain.Category) %>% 
-  relocate(Chemicals, .after = Domain.Category) 
-```
-
-## 2.4 Set Value Column to Numeric
-
-```{r, echo=FALSE}
-strawb$Value <- as.numeric(strawb$Value)
-```
-
-## 2.5 Create list of chemicals.
-
-```{r, echo=FALSE}
-strawb %<>% separate(col = Chemicals,
-                     into = c("title", "details"),
-                     sep = ":",
-                     fill = "right")
-
-strawb %<>% mutate(details = str_extract(str_trim(details) ,"[^(].*[^)]") )
-```
-
-## 2.6 Select only chemical columns.
-
-```{r, echo=FALSE}
-strawb_chem <- strawb %>% filter((type=="FUNGICIDE")|
-                                   (type=="HERBICIDE")|
-                                   (type=="INSECTICIDE")|
-                                   (type== "FERTILIZER")|
-                                   (type== "OTHER"))
-```
-
-## 2.7 Drop no info columns.
-
-```{r, echo=FALSE}
-drop_no_info_cols <- function(df){
-  cnames = colnames(strawb)
-  T = NULL
-  for(i in 1:ncol(df)){T <- c(T, nrow(unique(df[i])))}
-  drop_cols <- cnames[which(T == 1)]
-  return(select(df, !all_of(drop_cols)))
-}
-
-strawb_chem <- drop_no_info_cols(strawb_chem)
-```
-
-## 2.8 Separate the name from the =Number.
-
-```{r, echo=FALSE}
-chemname <- str_split(strawb_chem$details, " =", simplify = TRUE)
-strawb_chem$chemical <- chemname[,1]
-```
-
-## 2.9 Format chemical names in the pesticide file.
-
-```{r, echo=FALSE}
-pesticides<- clean_names(pesticides)
-pesticides<- rename(pesticides, chemical = i_pesticide)
-pesticides <- mutate_all(pesticides, .funs=toupper)
-```
-
-## 2.10 Remove empty rows
-
-```{r, echo=FALSE}
-pesticides <- pesticides[!apply(pesticides == "", 1, all), ] 
-```
-
-## 2.11 Wrangle two data files.
-
-```{r, echo=FALSE}
-strawberry <- inner_join(strawb_chem, pesticides)
-strawberry <- select(strawberry, -c("Domain.Category", "title", "details"))
-```
-
-## 2.12 Separate the column 'Data.item' into 4 columns "Strawberries", "items", "discription", "units".
-
-```{r, echo=FALSE}
-strawberry %<>% separate(col = Data.Item, 
-                   into = c("Strawberries", "items", "discription", "units"),
-                   sep = ",",
-                   fill = "right")
-```
-
-```{r, echo=FALSE}
-distinct(strawberry, Strawberries)
-distinct(strawberry, items)
-distinct(strawberry, discription)
-distinct(strawberry, units)
-```
-## 2.13 Drop the missing value of 'Value'.
-
-```{r, echo=FALSE}
-strawberry
-strawberry %<>%drop_na(Value)
-```
-
-## 2.14 Change names of variable "type","Carcinogen","Bee.Toxins".
-
-```{r, echo=FALSE}
-colnames(strawberry)[colnames(strawberry) %in% 
-                       c("type")] <- c("chemical_type")
-colnames(strawberry)[colnames(strawberry) %in% 
-                       c("discription")] <- c("Measurement(s)")
-colnames(strawberry)[colnames(strawberry) %in% 
-                       c("bee_toxins")] <- c("toxicity_bee")
-```
-
-## 2.15 Use numerical values to represent the bee.toxin level and Carcinogen level.
-
-```{r, echo=FALSE}
-strawberry$toxicity_bee <- plyr::mapvalues(strawberry$toxicity_bee, 
-                                         from = c("SLIGHT","MODERATE","HIGH"), to = c(1,2,3))
-strawberry$toxicity_bee <- as.numeric(strawberry$toxicity_bee)
-```
-
-```{r, echo=FALSE}
-strawberry$carcinogen <- plyr::mapvalues(strawberry$carcinogen, 
-                                         from = c("POSSIBLE","PROBABLE","KNOWN"), to = c(1,2,3))
-strawberry$carcinogen <- as.numeric(strawberry$carcinogen)
-```
-
-## 2.16 Remove missing values in carcinogen and toxicity_bee.
-
-```{r, echo=FALSE}
-strawberry_car <- subset(strawberry, carcinogen != "")
-```
-
-```{r, echo=FALSE}
-strawberry_car_insec <- subset(strawberry_car, toxicity_bee != "")
-```
-
-# 3. EDA -- We added mouse over into our plots.
-
-## 3.1 Subsets by different measurement
+## 2.1 Subsets by different measurement
 
 ```{r, echo=FALSE}
 table(strawberry$`Measurement(s)`)
@@ -198,7 +43,7 @@ df.num = subset(strawberry, `Measurement(s)` == "MEASURED IN NUMBER")
 df.PCT = subset(strawberry, `Measurement(s)` == "MEASURED IN PCT OF AREA BEARING")
 ```
 
-## 3.2 Calculate proportions of strawberries by 'Measurements=Number'
+## 2.2 Calculate proportions of strawberries by 'Measurements=Number'
 
 ```{r, echo=FALSE}
 df.num<-tibble::as_tibble(df.num)
@@ -209,7 +54,7 @@ df.num %>%
   mutate(freq = n / sum(n))
 ```
 
-## 3.3 Calculate proportions of values(numbers) grouped by 'toxicity_bee'
+## 2.3 Calculate proportions of values(numbers) grouped by 'toxicity_bee'
 
 ```{r, echo=FALSE}
 df.value<-tibble::as_tibble(df.num$Value)
@@ -231,32 +76,32 @@ df.toxicity %>%
 options(warn = oldw)
 ```
 
-# Show a pie chart with proportion in number of three states: CA, FL, WA
+# 2.4 Show a pie chart with proportion in number of three states: CA, FL, WA
 ```{r, include = TRUE}
 state_fig()
 ```
 The proportions of strawberries numbers have a significant difference between states. California has the largest share, and Washington has the smallest one. (CA > FL > WA)  
 
-# Show a map of Strawberries Yield measured in CWT/Acre
+# 2.5 Show a map of Strawberries Yield measured in CWT/Acre
 ```{r, include = TRUE}
 map.straw(strawb_yield[strawb_yield$Data.Item == "STRAWBERRIES - YIELD, MEASURED IN CWT / ACRE",], "Strawberries Yield (CWT/Acre))\n2015-2020")
 ```
 
 
-# Show a map of average number of pesticide application
+# 2.6 Show a map of average number of pesticide application
 ```{r, include = TRUE}
 map.straw(df.num,"Average Number of Pesticide Applications \n2016 2018 2019")
 ```
 
 
-# Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
+# 2.7 Show the correlation of average number of Bee Toxicity measured in applications and carcinogen level
 ```{r,include = TRUE}
 group_bars()
 ```
 From this graph, we can get the interesting finding that all strawberries measured in number with toxicity_bee exist with slight level of carcinogen. There does not exist strawberries measured in number with toxicity_bee in the 2 (medium) and 3 (high) level of carcinogen.  
 
 
-# 4. Reference
+# 3. Reference
 
 https://quickstats.nass.usda.gov/#56E84525-1350-34A1-9ED7-27363BD5A7D3
 
